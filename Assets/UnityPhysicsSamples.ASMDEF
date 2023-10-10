@@ -1,5 +1,6 @@
 {
     "name": "Unity.Physics.Samples",
+    "rootNamespace": "",
     "references": [
         "Havok.Physics",
         "Havok.Physics.Editor",
@@ -19,7 +20,9 @@
         "Unity.Physics.EditModeTests",
         "Unity.Physics.Editor",
         "Unity.Physics.Hybrid",
-        "Unity.Physics.Custom"
+        "Unity.Physics.Custom",
+        "Unity.Splines",
+        "Unity.Splines.Editor"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
@@ -27,7 +30,8 @@
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,
-    "defineConstraints": [ "UNITY_PHYSICS_CUSTOM"
+    "defineConstraints": [
+        "UNITY_PHYSICS_CUSTOM"
     ],
     "versionDefines": [
         {
