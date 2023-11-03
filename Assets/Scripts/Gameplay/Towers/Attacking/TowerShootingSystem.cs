@@ -57,6 +57,7 @@ public partial struct ShootingJob : IJobEntity
 
     public ComponentLookup<TargetComponent> targetComponentLookup;
     [ReadOnly] public ComponentLookup<LocalTransform> localTransformLookup;
+    //[ReadOnly] public ComponentLookup<TowerRadiusComponent> towerRadiusComponentLookup;
     [ReadOnly] public EntityStorageInfoLookup entityStorageInfoLookup;
 
     public float deltaTime;
@@ -77,17 +78,18 @@ public partial struct ShootingJob : IJobEntity
         shooter.attackTimer = 0;
 
         RefRO<LocalTransform> towerLocalTransform = localTransformLookup.GetRefRO(parent.Value);
+        RefRO<LocalTransform> towerTargetTransform = localTransformLookup.GetRefRO(towerTarget.ValueRO.enemy);
 
         Entity spawnedProjectile = entityCommandBuffer.Instantiate(shooter.projectile);
         entityCommandBuffer.SetComponent(spawnedProjectile, new LocalTransform
         {
             Position = towerLocalTransform.ValueRO.Position,
-            Rotation = quaternion.LookRotation(towerTarget.ValueRO.position - towerLocalTransform.ValueRO.Position, new float3(0, 1, 0)),
+            Rotation = quaternion.LookRotation(towerTargetTransform.ValueRO.Position - towerLocalTransform.ValueRO.Position, new float3(0, 1, 0)),
             Scale = 1,
         });
         entityCommandBuffer.SetComponent(spawnedProjectile, new PhysicsVelocity
         {
-            Linear = math.normalize(towerTarget.ValueRO.position - towerLocalTransform.ValueRO.Position) * 150,
+            Linear = math.normalize(towerTargetTransform.ValueRO.Position - towerLocalTransform.ValueRO.Position) * 150,
         });
     }
 }

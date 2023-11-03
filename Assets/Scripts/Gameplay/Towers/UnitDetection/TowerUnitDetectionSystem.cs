@@ -37,13 +37,13 @@ public partial struct TowerUnitDetectionSystem : ISystem
         CollisionWorld collisionWorld = singletonQuery.GetSingleton<PhysicsWorldSingleton>().CollisionWorld;
         singletonQuery.Dispose();
 
-        JobHandle CheckTargetReachJobHandle = new UnitDetectionJob
+        JobHandle unitDetectionHandle = new UnitDetectionJob
         {
             unitCollisionFilters = unitCollisionFilters,
             collisionWorld = collisionWorld,
         }.ScheduleParallel(state.Dependency);
 
-        CheckTargetReachJobHandle.Complete();
+        unitDetectionHandle.Complete();
 
         foreach (RefRW<TargetComponent> towerTarget in SystemAPI.Query<RefRW<TargetComponent>>())
         {
@@ -56,9 +56,6 @@ public partial struct TowerUnitDetectionSystem : ISystem
 
                 return;
             }
-
-            towerTarget.ValueRW.position = localTransformLookup.GetRefRO(towerTarget.ValueRO.enemy).ValueRO.Position;
-            Debug.DrawLine(towerTarget.ValueRO.position, towerTarget.ValueRW.position + new Unity.Mathematics.float3(0, 10, 0));
         }
     }
 }

@@ -4,7 +4,7 @@ using Unity.Entities;
 using Unity.Jobs;
 
 [BurstCompile]
-public partial struct ProjectileSystem : ISystem
+public partial struct ProjectileLifeTimeSystem : ISystem
 {
     [BurstCompile]
     public void OnCreate(ref SystemState state)

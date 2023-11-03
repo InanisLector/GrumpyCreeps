@@ -6,7 +6,7 @@ using UnityEngine;
 public class DamageAuthoring : MonoBehaviour
 {
     public uint damage;
-    public byte pierce;
+    public ushort pierce;
 }
 
 public class DamageBaker : Baker<DamageAuthoring>
@@ -19,5 +19,7 @@ public class DamageBaker : Baker<DamageAuthoring>
             damage = authoring.damage,
             pierce = authoring.pierce,
         });
+
+        AddBuffer<HitList>(entity);
     }
 }

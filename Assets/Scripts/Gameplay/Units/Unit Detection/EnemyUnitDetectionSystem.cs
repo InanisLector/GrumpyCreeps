@@ -16,16 +16,16 @@ public partial struct EnemyUnitDetectionSystem : ISystem
     {
         float deltaTime = SystemAPI.Time.DeltaTime;
 
-        foreach ((CollisionFilterComponent detectionFilter, TeamComponent team) in SystemAPI.Query<CollisionFilterComponent, TeamComponent>())
-        {
-            JobHandle handle = new BuildDetectionBounds
-            {
-                detectionFilter = detectionFilter,
-                team = team,
-            }.ScheduleParallel(state.Dependency);
+        //foreach ((CollisionFilterComponent detectionFilter, TeamComponent team) in SystemAPI.Query<CollisionFilterComponent, TeamComponent>())
+        //{
+        //    JobHandle handle = new BuildDetectionBounds
+        //    {
+        //        detectionFilter = detectionFilter,
+        //        team = team,
+        //    }.ScheduleParallel(state.Dependency);
 
-            handle.Complete();
-        }
+        //    handle.Complete();
+        //}
     }
 }
 
