@@ -1,5 +1,5 @@
 {
-    "name": "Unity.Physics.Samples",
+    "name": "GrumpyCreeps",
     "rootNamespace": "",
     "references": [
         "Havok.Physics",

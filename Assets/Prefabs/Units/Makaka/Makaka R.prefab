@@ -13,11 +13,11 @@ GameObject:
   - component: {fileID: 8829161260925283388}
   - component: {fileID: 5560369229807355303}
   - component: {fileID: 8877489810276669476}
-  - component: {fileID: 1168234535561714562}
   - component: {fileID: 3860521908996015978}
   - component: {fileID: 3984013946937477474}
   - component: {fileID: 2626225097111644107}
   - component: {fileID: 4569324165721065156}
+  - component: {fileID: 1010732834534575916}
   m_Layer: 0
   m_Name: Makaka R
   m_TagString: Untagged
@@ -154,8 +154,8 @@ MonoBehaviour:
       m_Override: 0
       m_Value:
         Category00: 0
-        Category01: 1
-        Category02: 0
+        Category01: 0
+        Category02: 1
         Category03: 0
         Category04: 0
         Category05: 0
@@ -284,32 +284,6 @@ MonoBehaviour:
     Tag05: 0
     Tag06: 0
     Tag07: 0
---- !u!114 &1168234535561714562
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7483114399603087100}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9457d04025dadec4b85ae39dad2e1822, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ConnectedBody: {fileID: 0}
-  EnableCollision: 0
-  MaxImpulse:
-    x: Infinity
-    y: Infinity
-    z: Infinity
-  LockLinearAxes:
-    x: 0
-    y: 1
-    z: 0
-  LockAngularAxes:
-    x: 1
-    y: 1
-    z: 1
 --- !u!114 &3860521908996015978
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -365,3 +339,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 30
   detectionRadius: 0
+--- !u!114 &1010732834534575916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7483114399603087100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21fabd49c65853841be7d76bd586afa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 100
