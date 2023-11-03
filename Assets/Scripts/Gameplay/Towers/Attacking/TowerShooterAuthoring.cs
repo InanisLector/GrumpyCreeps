@@ -6,9 +6,15 @@ public class TowerShooterAuthoring : MonoBehaviour
     public GameObject projectile;
 
     public byte projectileCount;
+
     public float attackTime;
 
-    //public NativeList<ProjectileModifiers> projectileModifiers;
+    public uint damage;
+    public ushort pierce;
+
+    public float lifeTime;
+
+    public float speed;
 }
 
 public class TowerShooterBaker : Baker<TowerShooterAuthoring>
@@ -22,6 +28,10 @@ public class TowerShooterBaker : Baker<TowerShooterAuthoring>
             projectileCount = authoring.projectileCount,
             attackTime = authoring.attackTime,
             attackTimer = authoring.attackTime,
+            damage = authoring.damage,
+            pierce = authoring.pierce,
+            lifeTime = authoring.lifeTime,
+            speed = authoring.speed,
         });
     }
 }

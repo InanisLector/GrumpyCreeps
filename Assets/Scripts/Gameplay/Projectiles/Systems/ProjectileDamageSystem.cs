@@ -4,7 +4,6 @@ using Unity.Entities;
 using Unity.Jobs;
 using Unity.Physics;
 using Unity.Physics.Systems;
-using UnityEngine;
 
 [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
 [UpdateAfter(typeof(PhysicsSystemGroup))]
@@ -100,18 +99,18 @@ public struct ProjectileHitJob : ITriggerEventsJob
         
         hits.Add(new HitList { entity = enemy });
 
-        //DamageComponent damage = projectileDamage[projectile];
-        //RefRW<AliveComponent> hp = enemiesHealth.GetRefRW(enemy);
+        DamageComponent damage = projectileDamage[projectile];
+        RefRW<AliveComponent> hp = enemiesHealth.GetRefRW(enemy);
 
-        //hp.ValueRW.currentHealth -= damage.damage;
+        hp.ValueRW.currentHealth -= damage.damage;
 
-        if (true)//hp.ValueRO.currentHealth < 1)
+        if (hp.ValueRO.currentHealth < 1)
         {
             deadEntities.Add(enemy);
             ECB.AddComponent(enemy, new IsDisposingComponent());
         }
 
-        if (true)//damage.pierce <= hitList[projectile].Length)
+        if (damage.pierce <= hitList[projectile].Length)
         {
             deadEntities.Add(projectile);
             ECB.DestroyEntity(projectile);

@@ -4,10 +4,15 @@ public struct TowerShooterComponent : IComponentData
 {
     public Entity projectile;
 
-    public byte projectileCount;
+    public ushort projectileCount;
 
     public float attackTime;
     public float attackTimer;
 
-    //public NativeList<ProjectileModifiers> projectileModifiers;
+    public uint damage;
+    public ushort pierce;
+
+    public float lifeTime;
+
+    public float speed;
 }

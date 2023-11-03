@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: -377898395617512184}
   - component: {fileID: -6567144445604586505}
   - component: {fileID: -7449649434240608104}
-  - component: {fileID: -5320150568625729186}
   - component: {fileID: -1669489630800519182}
   - component: {fileID: 6971496560313554305}
   - component: {fileID: 4846323087805208789}
@@ -52,7 +51,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_MotionType: 1
-  m_Smoothing: 1
+  m_Smoothing: 0
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0
@@ -247,19 +246,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 100
   pierce: 1
---- !u!114 &-5320150568625729186
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6038139779275636995}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b02f39523af0fd743b84214ee35c981b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 30
 --- !u!114 &-1669489630800519182
 MonoBehaviour:
   m_ObjectHideFlags: 0

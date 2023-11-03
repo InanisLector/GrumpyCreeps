@@ -4,7 +4,6 @@ using Unity.Entities;
 using Unity.Jobs;
 using Unity.Physics;
 using Unity.Transforms;
-using UnityEngine;
 
 [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
 [BurstCompile]
@@ -45,18 +44,18 @@ public partial struct TowerUnitDetectionSystem : ISystem
 
         unitDetectionHandle.Complete();
 
-        foreach (RefRW<TargetComponent> towerTarget in SystemAPI.Query<RefRW<TargetComponent>>())
-        {
-            if (towerTarget.ValueRO.enemy == Entity.Null)
-                return;
+        //foreach (RefRW<TargetComponent> towerTarget in SystemAPI.Query<RefRW<TargetComponent>>())
+        //{
+        //    if (towerTarget.ValueRO.enemy == Entity.Null)
+        //        return;
 
-            if (!entityStorageInfo.Exists(towerTarget.ValueRO.enemy))
-            {
-                towerTarget.ValueRW.enemy = Entity.Null;
+        //    if (!entityStorageInfo.Exists(towerTarget.ValueRO.enemy))
+        //    {
+        //        towerTarget.ValueRW.enemy = Entity.Null;
 
-                return;
-            }
-        }
+        //        return;
+        //    }
+        //}
     }
 }
 

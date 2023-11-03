@@ -89,7 +89,16 @@ public partial struct ShootingJob : IJobEntity
         });
         entityCommandBuffer.SetComponent(spawnedProjectile, new PhysicsVelocity
         {
-            Linear = math.normalize(towerTargetTransform.ValueRO.Position - towerLocalTransform.ValueRO.Position) * 150,
+            Linear = math.normalize(towerTargetTransform.ValueRO.Position - towerLocalTransform.ValueRO.Position) * shooter.speed,
+        });
+        entityCommandBuffer.SetComponent(spawnedProjectile, new DamageComponent
+        {
+            damage = shooter.damage,
+            pierce = shooter.pierce,
+        });
+        entityCommandBuffer.SetComponent(spawnedProjectile, new TemporaryComponent
+        {
+            lifeTime = shooter.lifeTime,
         });
     }
 }
