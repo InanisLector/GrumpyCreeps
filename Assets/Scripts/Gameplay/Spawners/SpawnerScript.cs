@@ -2,17 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.SceneManagement;
 using UnityEngine;
-using UnityEngine.Splines;
 
 public class SpawnerScript : MonoBehaviour
 {
     [Tooltip("Spline is given to spawned units. Units follow this spline.")]
-    [SerializeField] private Spline thisSpawnerSpline;
+    [SerializeField] private int SpawnerSplineIndex;
     [Space]
     [Tooltip("Time spend between two units being spawned.")]
     [SerializeField] private float timeBetweenSpawns = 1f;
 
     private Queue<int> _unitsQueue;
+
+    //private EntitySplinesContainer _container;
+
+    private void Awake()
+    {
+        //_container = GetComponentInParent<EntitySplinesContainer>();
+    }
 
     public void CreateUnitsQueue(List<int> unitIndexes)
     {
@@ -42,11 +48,11 @@ public class SpawnerScript : MonoBehaviour
     {
         //Redo this one for DOTS spawning pls
 
-        var splineComponent = unit.GetComponent<SplineAnimate>();
+        //var splineComponent = unit.GetComponent<SplineAnimate>();
 
-        splineComponent.Container.Spline = thisSpawnerSpline;
+        //splineComponent.Container.Spline = _container.Splines[SpawnerSplineIndex].Spline;
 
-        Instantiate(unit, transform.position, transform.rotation);
+        //nstantiate(unit, transform.position, transform.rotation);
 
     }
 

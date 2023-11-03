@@ -2,6 +2,7 @@ using Unity.Burst;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Physics;
+using Unity.Physics.Aspects;
 using Unity.Transforms;
 
 [BurstCompile]
@@ -13,6 +14,9 @@ public readonly partial struct MoveToPositionAspect : IAspect
     private readonly RefRO<UnitMovementStats> movementStats;
     private readonly RefRW<PhysicsVelocity> velocity;
     private readonly RefRW<TargetPosition> targetPosition;
+    private readonly RefRO<TeamComponent> team;
+
+    private readonly ColliderAspect collider;
 
     [BurstCompile]
     public void Move(float deltaTime)
