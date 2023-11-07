@@ -4,6 +4,7 @@ using UnityEngine;
 public class UnitMovementComponentAuthoring : MonoBehaviour
 {
     public float Speed;
+    public float Time;
     public int SplineIndex;
 }
 public class UnitMovementComponentBaker : Baker<UnitMovementComponentAuthoring>
@@ -16,6 +17,7 @@ public class UnitMovementComponentBaker : Baker<UnitMovementComponentAuthoring>
         {
             Speed = authoring.Speed,
             SplineIndex = authoring.SplineIndex,
+            Time = 0,
         });
     }
 }
