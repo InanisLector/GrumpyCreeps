@@ -7,12 +7,12 @@ public partial class SplineInitializationSystem : SystemBase
     {
         base.OnCreate();
 
-        var container = SystemAPI.GetSingleton<SplineContainer>();
+        //var container = SystemAPI.GetSingleton<SplineContainer>();
 
-        foreach(Spline spline in SystemAPI.Query<Spline>())
-        {
-            container.Splines.Add(spline);
-        }
+        //foreach(Spline spline in SystemAPI.Query<Spline>())
+        //{
+        //    container.Splines.Add(spline);
+        //}
     }
     protected override void OnUpdate()
     {

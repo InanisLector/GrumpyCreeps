@@ -11,9 +11,9 @@ public class SplineContainerBaker : Baker<SplineContainerAuthoring>
 {
     public override void Bake(SplineContainerAuthoring authoring)
     {
-        Entity entity = GetEntity(TransformUsageFlags.Dynamic);
+        //Entity entity = GetEntity(TransformUsageFlags.Dynamic);
 
-        AddComponent(entity, new SplineContainer{});
+        //AddComponent(entity, new SplineContainer{});
     }
 }
 

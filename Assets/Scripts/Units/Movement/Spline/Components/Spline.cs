@@ -1,14 +1,16 @@
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
+using UnityEngine;
 
+[ChunkSerializable]
 public struct Spline : IComponentData
 {
-    public NativeList<SplineSegment> SplineSegments;
+    public NativeArray<SplineSegment> SplineSegments;
 
     private float _splineLength;
 
-    public void Init(NativeList<SplineSegment> segments)
+    public void Init(NativeArray<SplineSegment> segments)
     {
         SplineSegments = segments;
 
@@ -18,16 +20,20 @@ public struct Spline : IComponentData
 
         GetTotalLength();
     }
-
+    //
     private void InitSpline()
     {
-        SplineSegments[0].Init(0);
+        var segment = SplineSegments[0];
+        segment.Init(0);
+        SplineSegments[0] = segment;
 
         for (int i = 1; i < SplineSegments.Length; i++)
         {
-            float startPercent = SplineSegments[i - 1].SplineData.brokenLinesPercents[^1];
+            float startPercent = SplineSegments[i - 1].SplineData.brokenLinesPercents[SplineSegments.Length - 1];
 
-            SplineSegments[i].Init(startPercent);
+            segment = SplineSegments[i];
+            segment.Init(startPercent);
+            SplineSegments[i] = segment;
         }
     }
 

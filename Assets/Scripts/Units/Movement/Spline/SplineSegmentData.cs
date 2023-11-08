@@ -1,19 +1,34 @@
 using Unity.Collections;
+using Unity.Entities.UniversalDelegates;
 using Unity.Mathematics;
+using UnityEngine;
 
 public struct SplineSegmentData
 {
     public const int COUNT_OF_BROKEN_LINE_POINTS = 50;
 
-    public NativeList<float3> brokenLinePoints { get; private set; }
-    public NativeList<float3> brokenLineRotations { get; private set; }
-    public NativeList<float> brokenLinesPercents { get; private set; }
+    public NativeArray<float3> brokenLinePoints;
+    public NativeArray<float3> brokenLineRotations;
+    public NativeArray<float> brokenLinesPercents;
 
-    public SplineSegmentData(SplineSegment segmentToInit, float startPercent) 
+    //public SplineSegmentData(SplineSegment segmentToInit, float startPercent) 
+    //{
+    //    brokenLinePoints = new NativeList<float3>(Allocator.Persistent);
+    //    brokenLineRotations = new NativeList<float3>(Allocator.Persistent);
+    //    brokenLinesPercents = new NativeList<float>(Allocator.Persistent);
+        
+    //    InitBrokenLinePoints(segmentToInit);
+
+    //    InitBrokenLinePercents(startPercent);
+    //}
+
+    
+
+    public void Init(SplineSegment segmentToInit, float startPercent)
     {
-        brokenLinePoints = new();
-        brokenLineRotations = new();
-        brokenLinesPercents = new();
+        brokenLinePoints = new NativeArray<float3>(COUNT_OF_BROKEN_LINE_POINTS, Allocator.Persistent);
+        brokenLineRotations = new NativeArray<float3>(COUNT_OF_BROKEN_LINE_POINTS, Allocator.Persistent);
+        brokenLinesPercents = new NativeArray<float>(COUNT_OF_BROKEN_LINE_POINTS, Allocator.Persistent);
 
         InitBrokenLinePoints(segmentToInit);
 
@@ -22,26 +37,26 @@ public struct SplineSegmentData
 
     private void InitBrokenLinePoints(SplineSegment segment)
     {
-        for (int i = 0; i <= COUNT_OF_BROKEN_LINE_POINTS; i++)
+        for (int i = 0; i < COUNT_OF_BROKEN_LINE_POINTS; i++)
         {
-            brokenLinePoints.Add(segment.GetPointOnSegment((float)i / COUNT_OF_BROKEN_LINE_POINTS));
+            brokenLinePoints[i] = segment.GetPointOnSegment((float)i / COUNT_OF_BROKEN_LINE_POINTS);
         }
     }
 
     private void InitBrokenLinePercents(float startPercent)
     {
-        brokenLinesPercents.Add(0 + startPercent);
-        brokenLineRotations.Add(float3.zero);
+        brokenLinesPercents[0] = startPercent;
+        brokenLineRotations[0] = float3.zero;
 
-        for (int i = 0; i < brokenLinePoints.Length - 1; i++)
+        for (int i = 0; i < COUNT_OF_BROKEN_LINE_POINTS - 1; i++)
         {
-            var start = brokenLinePoints[i];
-            var end = brokenLinePoints[i + 1];
+            float3 start = brokenLinePoints[i];
+            float3 end = brokenLinePoints[i + 1];
 
             float length = math.length(end - start);
 
-            brokenLinesPercents.Add(length + brokenLinesPercents[i]);
-            brokenLineRotations.Add(end - start);
+            brokenLinesPercents[i + 1] = length + brokenLinesPercents[i];
+            brokenLineRotations[i + 1] = end - start;
         }
     }
 }

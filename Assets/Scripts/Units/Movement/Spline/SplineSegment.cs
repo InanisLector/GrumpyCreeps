@@ -1,9 +1,8 @@
-using System;
 using Unity.Entities;
 using Unity.Mathematics;
 
-[Serializable]
-public struct SplineSegment : IBufferElementData
+[System.Serializable]
+public struct SplineSegment
 {
     public float3 StartPoint;
     public float3 FirstInterpolationPoint;
@@ -11,10 +10,11 @@ public struct SplineSegment : IBufferElementData
     public float3 EndPoint;
 
     public SplineSegmentData SplineData;
-
+    
     public void Init(float startPercent)
     {
-        SplineData = new SplineSegmentData(this, startPercent);
+        SplineData = new SplineSegmentData();
+        SplineData.Init(this, startPercent);
     }
 
     public float3 GetPointOnSegment(float t)
@@ -22,9 +22,9 @@ public struct SplineSegment : IBufferElementData
         float oneMinusT = 1f - t;
 
         return
-            oneMinusT * oneMinusT * oneMinusT * this.StartPoint +
-            3f * oneMinusT * oneMinusT * t * this.FirstInterpolationPoint +
-            3f * oneMinusT * t * t * this.SecondInterpolationPoint +
-            t * t * t * this.EndPoint;
+            oneMinusT * oneMinusT * oneMinusT * StartPoint +
+            3f * oneMinusT * oneMinusT * t * FirstInterpolationPoint +
+            3f * oneMinusT * t * t * SecondInterpolationPoint +
+            t * t * t * EndPoint;
     }
 }

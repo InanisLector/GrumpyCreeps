@@ -7,12 +7,12 @@ using UnityEngine;
 [UpdateAfter(typeof(InitializationSystemGroup))]
 public partial struct UnitMovementSystem : ISystem
 {
-    private SplineContainer _splineContainer;
+    //private SplineContainer _splineContainer;
 
     [BurstCompile]
     private void OnCreate(ref SystemState state)
     {
-        _splineContainer = SystemAPI.GetSingleton<SplineContainer>();
+        //_splineContainer = SystemAPI.GetSingleton<SplineContainer>();
     }
 
     [BurstCompile]
@@ -21,16 +21,16 @@ public partial struct UnitMovementSystem : ISystem
     [BurstCompile]
     private void OnUpdate(ref SystemState state)
     {
-        foreach ((RefRW<UnitMovementComponent> movement, RefRW<LocalTransform> transform) in SystemAPI.Query<RefRW<UnitMovementComponent>, RefRW<LocalTransform>>())
-        {
-            var spline = _splineContainer.GetSplineByIndex(movement.ValueRO.SplineIndex);
+        //foreach ((RefRW<UnitMovementComponent> movement, RefRW<LocalTransform> transform) in SystemAPI.Query<RefRW<UnitMovementComponent>, RefRW<LocalTransform>>())
+        //{
+        //    var spline = _splineContainer.GetSplineByIndex(movement.ValueRO.SplineIndex);
 
-            var newTransform = spline.GetPointAndRotationOnSpline(movement.ValueRO.Time);
+        //    var newTransform = spline.GetPointAndRotationOnSpline(movement.ValueRO.Time);
 
-            transform.ValueRW.Position = newTransform.position;
-            transform.ValueRW.Rotation = Quaternion.LookRotation(newTransform.rotation);
+        //    transform.ValueRW.Position = newTransform.position;
+        //    transform.ValueRW.Rotation = Quaternion.LookRotation(newTransform.rotation);
 
-            movement.ValueRW.Time += SystemAPI.Time.DeltaTime;
-        }
+        //    movement.ValueRW.Time += SystemAPI.Time.DeltaTime;
+        //}
     }
 }

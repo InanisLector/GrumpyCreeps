@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-    [SerializeField] private Spline spline;
+    //[SerializeField] private Spline spline;
     [SerializeField] private float speed = 3f;
 
     private float time;
@@ -11,8 +11,8 @@ public class Movement : MonoBehaviour
     {
         time += Time.deltaTime * speed;
 
-        var newTransform = spline.GetPointAndRotationOnSpline(time);
+        //var newTransform = spline.GetPointAndRotationOnSpline(time);
 
-        transform.SetPositionAndRotation(newTransform.position, Quaternion.LookRotation(newTransform.rotation));
+        //transform.SetPositionAndRotation(newTransform.position, Quaternion.LookRotation(newTransform.rotation));
     }
 }
