@@ -26,9 +26,9 @@ public struct SplineSegmentData
 
     public void Init(SplineSegment segmentToInit, float startPercent)
     {
-        brokenLinePoints = new NativeArray<float3>(COUNT_OF_BROKEN_LINE_POINTS, Allocator.Persistent);
-        brokenLineRotations = new NativeArray<float3>(COUNT_OF_BROKEN_LINE_POINTS, Allocator.Persistent);
-        brokenLinesPercents = new NativeArray<float>(COUNT_OF_BROKEN_LINE_POINTS, Allocator.Persistent);
+        brokenLinePoints = new NativeArray<float3>(COUNT_OF_BROKEN_LINE_POINTS + 1, Allocator.Persistent);
+        brokenLineRotations = new NativeArray<float3>(COUNT_OF_BROKEN_LINE_POINTS + 1, Allocator.Persistent);
+        brokenLinesPercents = new NativeArray<float>(COUNT_OF_BROKEN_LINE_POINTS + 1, Allocator.Persistent);
 
         InitBrokenLinePoints(segmentToInit);
 
@@ -37,7 +37,7 @@ public struct SplineSegmentData
 
     private void InitBrokenLinePoints(SplineSegment segment)
     {
-        for (int i = 0; i < COUNT_OF_BROKEN_LINE_POINTS; i++)
+        for (int i = 0; i <= COUNT_OF_BROKEN_LINE_POINTS; i++)
         {
             brokenLinePoints[i] = segment.GetPointOnSegment((float)i / COUNT_OF_BROKEN_LINE_POINTS);
         }
@@ -48,7 +48,7 @@ public struct SplineSegmentData
         brokenLinesPercents[0] = startPercent;
         brokenLineRotations[0] = float3.zero;
 
-        for (int i = 0; i < COUNT_OF_BROKEN_LINE_POINTS - 1; i++)
+        for (int i = 0; i < COUNT_OF_BROKEN_LINE_POINTS; i++)
         {
             float3 start = brokenLinePoints[i];
             float3 end = brokenLinePoints[i + 1];

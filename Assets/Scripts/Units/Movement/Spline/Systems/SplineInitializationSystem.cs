@@ -1,21 +1,25 @@
 using Unity.Entities;
 
-[UpdateInGroup(typeof(InitializationSystemGroup))]
+[UpdateBefore(typeof(UnitMovementSystem))]
 public partial class SplineInitializationSystem : SystemBase
 {
     protected override void OnCreate()
     {
         base.OnCreate();
-
-        //var container = SystemAPI.GetSingleton<SplineContainer>();
-
-        //foreach(Spline spline in SystemAPI.Query<Spline>())
-        //{
-        //    container.Splines.Add(spline);
-        //}
+        
     }
     protected override void OnUpdate()
     {
+        RefRW<SplineContainer> splineContainer = SystemAPI.GetSingletonRW<SplineContainer>();
 
+        if (splineContainer.ValueRW.isSetUp)
+            return;
+
+        foreach (Spline spline in SystemAPI.Query<Spline>())
+        {
+            splineContainer.ValueRW.Splines.Add(spline);
+        }
+
+        splineContainer.ValueRW.isSetUp = true;
     }
 }
