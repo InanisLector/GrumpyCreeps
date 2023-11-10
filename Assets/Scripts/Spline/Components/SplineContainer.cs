@@ -6,7 +6,8 @@ using UnityEngine;
 public struct SplineContainer : IComponentData
 {
     public NativeList<Spline> Splines;
-    public bool isSetUp;
+
+    public bool IsSetUp;
 
     public Spline GetSplineByIndex(int splineIndex)
     {

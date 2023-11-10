@@ -7,9 +7,7 @@ using UnityEngine;
 public partial struct UnitMovementSystem : ISystem
 {
     [BurstCompile]
-    private void OnCreate(ref SystemState state)
-    {
-    }
+    private void OnCreate(ref SystemState state) { }
 
     [BurstCompile]
     private void OnDestroy(ref SystemState state) { }
@@ -19,7 +17,7 @@ public partial struct UnitMovementSystem : ISystem
     {
         SplineContainer splineContainer = SystemAPI.GetSingleton<SplineContainer>();
 
-        if (splineContainer.isSetUp == false)
+        if (splineContainer.IsSetUp == false)
             return;
 
         foreach ((RefRW<UnitMovementComponent> movement, RefRW<LocalTransform> transform) in SystemAPI.Query<RefRW<UnitMovementComponent>, RefRW<LocalTransform>>())

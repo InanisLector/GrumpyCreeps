@@ -5,8 +5,7 @@ using UnityEngine;
 
 public class SplineAuthoring : MonoBehaviour
 {
-    //[Header("Gizmos")]
-    //public List<SerializeSplineSegment> SplineSegments = new List<SerializeSplineSegment>();
+    [Header("Spline")]
     public List<SplineSegment> SplineSegments = new List<SplineSegment>();
     [Space]
     [Header("Gizmos")]
@@ -84,20 +83,6 @@ public class SplineBaker : Baker<SplineAuthoring>
         Entity entity = GetEntity(TransformUsageFlags.Dynamic);
 
         Spline spline = new Spline();
-        //NativeArray<SplineSegment> segments = new NativeArray<SplineSegment>(authoring.SplineSegments.Count, Allocator.Persistent);
-
-        //for (int i = 0; i < authoring.SplineSegments.Count; i++)
-        //{
-        //    SerializeSplineSegment segment = authoring.SplineSegments[i];
-
-        //    segments[i] = new SplineSegment
-        //    {
-        //        StartPoint = segment.StartPoint,
-        //        EndPoint = segment.EndPoint,
-        //        FirstInterpolationPoint = segment.FirstInterpolationPoint,
-        //        SecondInterpolationPoint = segment.SecondInterpolationPoint,
-        //    };
-        //}
 
         spline.Init(authoring.SplineSegments.ToNativeArray(Allocator.Persistent));
 

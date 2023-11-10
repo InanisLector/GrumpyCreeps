@@ -1,7 +1,7 @@
-using Unity.Entities;
+using System;
 using Unity.Mathematics;
 
-[System.Serializable]
+[Serializable]
 public struct SplineSegment
 {
     public float3 StartPoint;

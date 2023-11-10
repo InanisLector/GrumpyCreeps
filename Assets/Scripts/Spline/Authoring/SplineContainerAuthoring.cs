@@ -2,9 +2,7 @@ using Unity.Collections;
 using Unity.Entities;
 using UnityEngine;
 
-public class SplineContainerAuthoring : MonoBehaviour
-{
-}
+public class SplineContainerAuthoring : MonoBehaviour { }
 
 public class SplineContainerBaker : Baker<SplineContainerAuthoring>
 {
@@ -15,7 +13,7 @@ public class SplineContainerBaker : Baker<SplineContainerAuthoring>
         AddComponent(entity, new SplineContainer
         {
             Splines = new NativeList<Spline>(Allocator.Persistent),
-            isSetUp = false,
+            IsSetUp = false,
         });
     }
 }

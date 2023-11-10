@@ -3,16 +3,11 @@ using Unity.Entities;
 [UpdateBefore(typeof(UnitMovementSystem))]
 public partial class SplineInitializationSystem : SystemBase
 {
-    protected override void OnCreate()
-    {
-        base.OnCreate();
-        
-    }
     protected override void OnUpdate()
     {
         RefRW<SplineContainer> splineContainer = SystemAPI.GetSingletonRW<SplineContainer>();
 
-        if (splineContainer.ValueRW.isSetUp)
+        if (splineContainer.ValueRW.IsSetUp)
             return;
 
         foreach (Spline spline in SystemAPI.Query<Spline>())
@@ -20,6 +15,6 @@ public partial class SplineInitializationSystem : SystemBase
             splineContainer.ValueRW.Splines.Add(spline);
         }
 
-        splineContainer.ValueRW.isSetUp = true;
+        splineContainer.ValueRW.IsSetUp = true;
     }
 }

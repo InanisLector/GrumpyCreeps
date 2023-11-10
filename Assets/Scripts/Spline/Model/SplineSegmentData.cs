@@ -1,7 +1,5 @@
 using Unity.Collections;
-using Unity.Entities.UniversalDelegates;
 using Unity.Mathematics;
-using UnityEngine;
 
 public struct SplineSegmentData
 {
@@ -10,19 +8,6 @@ public struct SplineSegmentData
     public NativeArray<float3> brokenLinePoints;
     public NativeArray<float3> brokenLineRotations;
     public NativeArray<float> brokenLinesPercents;
-
-    //public SplineSegmentData(SplineSegment segmentToInit, float startPercent) 
-    //{
-    //    brokenLinePoints = new NativeList<float3>(Allocator.Persistent);
-    //    brokenLineRotations = new NativeList<float3>(Allocator.Persistent);
-    //    brokenLinesPercents = new NativeList<float>(Allocator.Persistent);
-        
-    //    InitBrokenLinePoints(segmentToInit);
-
-    //    InitBrokenLinePercents(startPercent);
-    //}
-
-    
 
     public void Init(SplineSegment segmentToInit, float startPercent)
     {
