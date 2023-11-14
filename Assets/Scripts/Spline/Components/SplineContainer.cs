@@ -2,22 +2,25 @@ using Unity.Collections;
 using Unity.Entities;
 using UnityEngine;
 
-[ChunkSerializable]
-public struct SplineContainer : IComponentData
+namespace GC.Spline
 {
-    public NativeList<Spline> Splines;
-
-    public bool IsSetUp;
-
-    public Spline GetSplineByIndex(int splineIndex)
+    [ChunkSerializable]
+    public struct SplineContainer : IComponentData
     {
-        if(splineIndex >= Splines.Length || splineIndex < 0)
+        public NativeList<Spline> Splines;
+
+        public bool IsSetUp;
+
+        public Spline GetSplineByIndex(int splineIndex)
         {
-            Debug.LogError("Spline Container: Spline Index was out of bounds!");
+            if (splineIndex >= Splines.Length || splineIndex < 0)
+            {
+                Debug.LogError("Spline Container: Spline Index was out of bounds!");
 
-            return new Spline();
+                return new Spline();
+            }
+
+            return Splines[splineIndex];
         }
-
-        return Splines[splineIndex];
     }
 }

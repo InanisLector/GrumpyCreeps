@@ -1,22 +1,25 @@
 using Unity.Entities;
 using UnityEngine;
 
-public class UnitMovementComponentAuthoring : MonoBehaviour
+namespace GC.Units.Movement
 {
-    public float Speed;
-    public int SplineIndex;
-}
-public class UnitMovementComponentBaker : Baker<UnitMovementComponentAuthoring>
-{
-    public override void Bake(UnitMovementComponentAuthoring authoring)
+    public class UnitMovementComponentAuthoring : MonoBehaviour
     {
-        Entity entity = GetEntity(TransformUsageFlags.Dynamic);
-
-        AddComponent(entity, new UnitMovementComponent
+        public float Speed;
+        public int SplineIndex;
+    }
+    public class UnitMovementComponentBaker : Baker<UnitMovementComponentAuthoring>
+    {
+        public override void Bake(UnitMovementComponentAuthoring authoring)
         {
-            Speed = authoring.Speed,
-            SplineIndex = authoring.SplineIndex,
-            Time = 0,
-        });
+            Entity entity = GetEntity(TransformUsageFlags.Dynamic);
+
+            AddComponent(entity, new UnitMovementComponent
+            {
+                Speed = authoring.Speed,
+                SplineIndex = authoring.SplineIndex,
+                Time = 0,
+            });
+        }
     }
 }

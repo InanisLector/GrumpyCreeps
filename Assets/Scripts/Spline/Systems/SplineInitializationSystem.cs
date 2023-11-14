@@ -1,20 +1,24 @@
+using GC.Units.Movement;
 using Unity.Entities;
 
-[UpdateBefore(typeof(UnitMovementSystem))]
-public partial class SplineInitializationSystem : SystemBase
+namespace GC.Spline
 {
-    protected override void OnUpdate()
+    [UpdateBefore(typeof(UnitMovementSystem))]
+    public partial class SplineInitializationSystem : SystemBase
     {
-        RefRW<SplineContainer> splineContainer = SystemAPI.GetSingletonRW<SplineContainer>();
-
-        if (splineContainer.ValueRW.IsSetUp)
-            return;
-
-        foreach (Spline spline in SystemAPI.Query<Spline>())
+        protected override void OnUpdate()
         {
-            splineContainer.ValueRW.Splines.Add(spline);
-        }
+            RefRW<SplineContainer> splineContainer = SystemAPI.GetSingletonRW<SplineContainer>();
 
-        splineContainer.ValueRW.IsSetUp = true;
+            if (splineContainer.ValueRW.IsSetUp)
+                return;
+
+            foreach (Spline spline in SystemAPI.Query<Spline>())
+            {
+                splineContainer.ValueRW.Splines.Add(spline);
+            }
+
+            splineContainer.ValueRW.IsSetUp = true;
+        }
     }
 }

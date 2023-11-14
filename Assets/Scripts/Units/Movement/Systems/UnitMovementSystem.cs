@@ -1,35 +1,39 @@
+using GC.Spline;
 using Unity.Burst;
 using Unity.Entities;
 using Unity.Transforms;
 using UnityEngine;
 
-[BurstCompile]
-public partial struct UnitMovementSystem : ISystem
+namespace GC.Units.Movement
 {
     [BurstCompile]
-    private void OnCreate(ref SystemState state) { }
-
-    [BurstCompile]
-    private void OnDestroy(ref SystemState state) { }
-
-    [BurstCompile]
-    private void OnUpdate(ref SystemState state)
+    public partial struct UnitMovementSystem : ISystem
     {
-        SplineContainer splineContainer = SystemAPI.GetSingleton<SplineContainer>();
+        [BurstCompile]
+        private void OnCreate(ref SystemState state) { }
 
-        if (splineContainer.IsSetUp == false)
-            return;
+        [BurstCompile]
+        private void OnDestroy(ref SystemState state) { }
 
-        foreach ((RefRW<UnitMovementComponent> movement, RefRW<LocalTransform> transform) in SystemAPI.Query<RefRW<UnitMovementComponent>, RefRW<LocalTransform>>())
+        [BurstCompile]
+        private void OnUpdate(ref SystemState state)
         {
-            var spline = splineContainer.GetSplineByIndex(movement.ValueRO.SplineIndex);
+            SplineContainer splineContainer = SystemAPI.GetSingleton<SplineContainer>();
 
-            var newTransform = spline.GetPointAndRotationOnSpline(movement.ValueRO.Time);
+            if (splineContainer.IsSetUp == false)
+                return;
 
-            transform.ValueRW.Position = newTransform.position;
-            transform.ValueRW.Rotation = Quaternion.LookRotation(newTransform.rotation);
+            foreach ((RefRW<UnitMovementComponent> movement, RefRW<LocalTransform> transform) in SystemAPI.Query<RefRW<UnitMovementComponent>, RefRW<LocalTransform>>())
+            {
+                var spline = splineContainer.GetSplineByIndex(movement.ValueRO.SplineIndex);
 
-            movement.ValueRW.Time += SystemAPI.Time.DeltaTime * movement.ValueRO.Speed;
+                var newTransform = spline.GetPointAndRotationOnSpline(movement.ValueRO.Time);
+
+                transform.ValueRW.Position = newTransform.position;
+                transform.ValueRW.Rotation = Quaternion.LookRotation(newTransform.rotation);
+
+                movement.ValueRW.Time += SystemAPI.Time.DeltaTime * movement.ValueRO.Speed;
+            }
         }
     }
 }

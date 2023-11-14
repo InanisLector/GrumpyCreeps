@@ -2,19 +2,21 @@ using Unity.Collections;
 using Unity.Entities;
 using UnityEngine;
 
-public class SplineContainerAuthoring : MonoBehaviour { }
-
-public class SplineContainerBaker : Baker<SplineContainerAuthoring>
+namespace GC.Spline
 {
-    public override void Bake(SplineContainerAuthoring authoring)
-    {
-        Entity entity = GetEntity(TransformUsageFlags.Dynamic);
+    public class SplineContainerAuthoring : MonoBehaviour { }
 
-        AddComponent(entity, new SplineContainer
+    public class SplineContainerBaker : Baker<SplineContainerAuthoring>
+    {
+        public override void Bake(SplineContainerAuthoring authoring)
         {
-            Splines = new NativeList<Spline>(Allocator.Persistent),
-            IsSetUp = false,
-        });
+            Entity entity = GetEntity(TransformUsageFlags.Dynamic);
+
+            AddComponent(entity, new SplineContainer
+            {
+                Splines = new NativeList<Spline>(Allocator.Persistent),
+                IsSetUp = false,
+            });
+        }
     }
 }
-

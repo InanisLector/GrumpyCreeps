@@ -2,80 +2,83 @@ using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 
-[ChunkSerializable]
-public struct Spline : IComponentData
+namespace GC.Spline
 {
-    public NativeArray<SplineSegment> SplineSegments;
-
-    private float _splineLength;
-
-    public void Init(NativeArray<SplineSegment> segments)
+    [ChunkSerializable]
+    public struct Spline : IComponentData
     {
-        SplineSegments = segments;
+        public NativeArray<SplineSegment> SplineSegments;
 
-        _splineLength = 0f;
+        private float _splineLength;
 
-        InitSpline();
-
-        GetTotalLength();
-    }
-    private void InitSpline()
-    {
-        for (int i = 0; i < SplineSegments.Length; i++)
+        public void Init(NativeArray<SplineSegment> segments)
         {
-            float startPercent = 0f;
+            SplineSegments = segments;
 
-            if(i != 0)
-                startPercent = SplineSegments[i - 1].SplineData.brokenLinesPercents[^1];
+            _splineLength = 0f;
 
-            var segment = SplineSegments[i];
+            InitSpline();
 
-            segment.Init(startPercent);
-            SplineSegments[i] = segment;
+            GetTotalLength();
         }
-    }
-
-    private void GetTotalLength()
-    {
-        foreach (var segment in SplineSegments)
+        private void InitSpline()
         {
-            _splineLength += segment.SplineData.brokenLinesPercents[^1];
-        }
-    }
-
-    public (float3 position, float3 rotation) GetPointAndRotationOnSpline(float time)
-    {
-        int currentSegmentIndex = GetCurrentSegment(time);
-
-        var data = SplineSegments[currentSegmentIndex].SplineData;
-
-        var percents = data.brokenLinesPercents;
-        var points = data.brokenLinePoints;
-        var rotations = data.brokenLineRotations;
-
-        for (int i = 0; i < percents.Length - 1; i++)
-        {
-            if (time > percents[i] && time < percents[i + 1])
+            for (int i = 0; i < SplineSegments.Length; i++)
             {
-                float alpha = (time - percents[i]) / (percents[i + 1] - percents[i]);
+                float startPercent = 0f;
 
-                return (math.lerp(points[i], points[i + 1], alpha), math.lerp(rotations[i], rotations[i + 1], alpha));
+                if (i != 0)
+                    startPercent = SplineSegments[i - 1].SplineData.brokenLinesPercents[^1];
+
+                var segment = SplineSegments[i];
+
+                segment.Init(startPercent);
+                SplineSegments[i] = segment;
             }
         }
 
-        return (points[^1], rotations[^1]);
-    }
-
-    private int GetCurrentSegment(float time)
-    {
-        for(int i = 0; i < SplineSegments.Length; i++)
+        private void GetTotalLength()
         {
-            float percent = SplineSegments[i].SplineData.brokenLinesPercents[^1];
-
-            if (time / _splineLength < percent / _splineLength)
-                return i;
+            foreach (var segment in SplineSegments)
+            {
+                _splineLength += segment.SplineData.brokenLinesPercents[^1];
+            }
         }
 
-        return SplineSegments.Length - 1;
+        public (float3 position, float3 rotation) GetPointAndRotationOnSpline(float time)
+        {
+            int currentSegmentIndex = GetCurrentSegment(time);
+
+            var data = SplineSegments[currentSegmentIndex].SplineData;
+
+            var percents = data.brokenLinesPercents;
+            var points = data.brokenLinePoints;
+            var rotations = data.brokenLineRotations;
+
+            for (int i = 0; i < percents.Length - 1; i++)
+            {
+                if (time > percents[i] && time < percents[i + 1])
+                {
+                    float alpha = (time - percents[i]) / (percents[i + 1] - percents[i]);
+
+                    return (math.lerp(points[i], points[i + 1], alpha), math.lerp(rotations[i], rotations[i + 1], alpha));
+                }
+            }
+
+            return (points[^1], rotations[^1]);
+        }
+
+        private int GetCurrentSegment(float time)
+        {
+            for (int i = 0; i < SplineSegments.Length; i++)
+            {
+                float percent = SplineSegments[i].SplineData.brokenLinesPercents[^1];
+
+                if (time / _splineLength < percent / _splineLength)
+                    return i;
+            }
+
+            return SplineSegments.Length - 1;
+        }
     }
 }

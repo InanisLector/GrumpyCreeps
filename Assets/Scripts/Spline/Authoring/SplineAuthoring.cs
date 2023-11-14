@@ -7,7 +7,7 @@ using UnityEditor.EditorTools;
 using UnityEditor.ShortcutManagement;
 using UnityEngine;
 
-public class SplineAuthoring : MonoBehaviour
+namespace GC.Spline
 {
     [Header("Spline")]
     public List<SplineSegment> SplineSegments = new List<SplineSegment>()
@@ -40,10 +40,17 @@ public class SplineAuthoring : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        if (SegmentsAreNull())
-            return;
+        [Header("Spline")]
+        public List<SplineSegment> SplineSegments = new List<SplineSegment>();
+        [Space]
+        [Header("Gizmos")]
+        [SerializeField] private Color brokenLinePointColor = new Color(0f, 255f, 0f, 255f);
+        [SerializeField] private Color splineColor = new Color(255f, 0f, 0f, 255f);
+        [SerializeField] private Color linearSplineColor = new Color(255f, 0f, 255f, 255f);
+        [SerializeField] private float gizmosIconSize = 1f;
 
-        foreach (var segment in SplineSegments)
+        #region Gizmos
+        private void OnDrawGizmos()
         {
             DrawLinearSpline(segment);
             
@@ -63,9 +70,9 @@ public class SplineAuthoring : MonoBehaviour
         DrawSplineEnds();
     }
 
-    private void DrawLinearSpline(SplineSegment segment)
-    {
-        Gizmos.color = linearSplineColor;
+        private void DrawLinearSpline(SplineSegment segment)
+        {
+            Gizmos.color = linearSplineColor;
 
         Vector3 cubeSize = new Vector3(splineLeverSize, splineLeverSize, splineLeverSize);
 
@@ -87,15 +94,15 @@ public class SplineAuthoring : MonoBehaviour
         Vector3 previousPoint = segment.StartPoint;
         Vector3 cubeSize = new Vector3(splineLeverSize, splineLeverSize, splineLeverSize);
 
-        int countOfPoints = SplineSegmentData.COUNT_OF_BROKEN_LINE_POINTS;
+            int countOfPoints = SplineSegmentData.COUNT_OF_BROKEN_LINE_POINTS;
 
-        for (int i = 0; i <= countOfPoints; i++)
-        {
-            Vector3 currentPoint = segment.GetPointOnSegment((float)i / countOfPoints);
+            for (int i = 0; i <= countOfPoints; i++)
+            {
+                Vector3 currentPoint = segment.GetPointOnSegment((float)i / countOfPoints);
 
-            Gizmos.color = splineColor;
+                Gizmos.color = splineColor;
 
-            Gizmos.DrawLine(previousPoint, currentPoint);
+                Gizmos.DrawLine(previousPoint, currentPoint);
 
             if (drawBrokenLinePoint)
             {
@@ -104,7 +111,8 @@ public class SplineAuthoring : MonoBehaviour
                 Gizmos.DrawSphere(currentPoint, splineLinePointSize * splineLinePointSize);
             }
 
-            previousPoint = currentPoint;
+                previousPoint = currentPoint;
+            }
         }
 
         if (drawSplineSegmentPoints)
@@ -132,24 +140,27 @@ public class SplineAuthoring : MonoBehaviour
         if (SplineSegments == null)
             return true;
 
-        return false;
+            return false;
+        }
+        #endregion
     }
 #endif
 #endregion
 
 }
 
-public class SplineBaker : Baker<SplineAuthoring>
-{
-    public override void Bake(SplineAuthoring authoring)
+    public class SplineBaker : Baker<SplineAuthoring>
     {
-        Entity entity = GetEntity(TransformUsageFlags.Dynamic);
+        public override void Bake(SplineAuthoring authoring)
+        {
+            Entity entity = GetEntity(TransformUsageFlags.Dynamic);
 
-        Spline spline = new Spline();
+            Spline spline = new Spline();
 
-        spline.Init(authoring.SplineSegments.ToNativeArray(Allocator.Persistent));
+            spline.Init(authoring.SplineSegments.ToNativeArray(Allocator.Persistent));
 
-        AddComponent(entity, spline);
+            AddComponent(entity, spline);
+        }
     }
 }
 
