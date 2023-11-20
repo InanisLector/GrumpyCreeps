@@ -1,16 +1,17 @@
+using GC.Spline;
+using System.Security.Principal;
 using Unity.Burst;
 using Unity.Entities;
+using Unity.Mathematics;
 using Unity.Transforms;
+using UnityEngine;
 
 [BurstCompile]
 public readonly partial struct UnitSpawnerAspect : IAspect
 {
     private readonly Entity entity;
 
-    private readonly RefRW<LocalTransform> localTransform;
-    private readonly RefRO<UnitDeckComponent> unitDeck;
     private readonly RefRW<UnitSpawnTimeComponent> spawnTime;
-    private readonly RefRO<TeamComponent> team;
 
     [BurstCompile]
     public void UpdateSpawnTimer(float deltaTime)
@@ -23,16 +24,23 @@ public readonly partial struct UnitSpawnerAspect : IAspect
         spawnTime.ValueRW.spawnTimer = 0;
         spawnTime.ValueRW.canSpawn = true;
     }
-
+    
     [BurstCompile]
-    public void Spawn(EntityCommandBuffer entityCommandBuffer)
+    public void Spawn(EntityCommandBuffer entityCommandBuffer, SplineContainer splineContainer,
+        UnitDeckComponent unitDeck, BufferLookup<UnitDeckIndex> unitDeckIndexLookup)
     {
         if (!spawnTime.ValueRW.canSpawn)
             return;
 
-        Entity entity = entityCommandBuffer.Instantiate(unitDeck.ValueRO.unit);
-        entityCommandBuffer.SetComponent(entity, localTransform.ValueRO);
-        entityCommandBuffer.SetComponent(entity, team.ValueRO);
+        //Debug.Log($"spawn {unitDeck.deck[0]}");
+        //Entity unit = unitDeck.deck[0];
+        Entity spawnedEntity = entityCommandBuffer.Instantiate(unitDeck.test);//]);
+        entityCommandBuffer.SetComponent(spawnedEntity, new LocalTransform
+        {
+            Position = splineContainer.GetSplineByIndex(0).SplineSegments[0].StartPoint,
+            Rotation = quaternion.identity,
+            Scale = 1,
+        });
 
         spawnTime.ValueRW.canSpawn = false;
     }

@@ -18,7 +18,7 @@ namespace GC.Units.Movement
             {
                 Speed = authoring.Speed,
                 SplineIndex = authoring.SplineIndex,
-                Time = 0,
+                Time = 0.1f,
             });
         }
     }

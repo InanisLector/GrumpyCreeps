@@ -1,21 +1,24 @@
+using GC.Units.Movement;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Jobs;
 using Unity.Physics;
 using Unity.Transforms;
+using UnityEngine;
 
-[UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
 [BurstCompile]
 public partial struct TowerUnitDetectionSystem : ISystem 
 {
     private ComponentLookup<LocalTransform> localTransformLookup;
+    private ComponentLookup<UnitMovementComponent> unitMovementComponentLookup;
     private EntityStorageInfoLookup entityStorageInfo;
 
     [BurstCompile]
     public void OnCreate(ref SystemState state)
     {
         localTransformLookup = state.GetComponentLookup<LocalTransform>(true);
+        unitMovementComponentLookup = state.GetComponentLookup<UnitMovementComponent>(true);
         entityStorageInfo = state.GetEntityStorageInfoLookup();
     }
 
@@ -29,6 +32,7 @@ public partial struct TowerUnitDetectionSystem : ISystem
             SystemAPI.GetSingleton<DetectionCollisionFiltersComponent>();
 
         localTransformLookup.Update(ref state);
+        unitMovementComponentLookup.Update(ref state);
         entityStorageInfo.Update(ref state);
 
         EntityQueryBuilder builder = new EntityQueryBuilder(Allocator.Temp).WithAll<PhysicsWorldSingleton>();
@@ -39,23 +43,11 @@ public partial struct TowerUnitDetectionSystem : ISystem
         JobHandle unitDetectionHandle = new UnitDetectionJob
         {
             unitCollisionFilters = unitCollisionFilters,
+            unitMovementComponentLookup = unitMovementComponentLookup,
             collisionWorld = collisionWorld,
         }.ScheduleParallel(state.Dependency);
 
         unitDetectionHandle.Complete();
-
-        //foreach (RefRW<TargetComponent> towerTarget in SystemAPI.Query<RefRW<TargetComponent>>())
-        //{
-        //    if (towerTarget.ValueRO.enemy == Entity.Null)
-        //        return;
-
-        //    if (!entityStorageInfo.Exists(towerTarget.ValueRO.enemy))
-        //    {
-        //        towerTarget.ValueRW.enemy = Entity.Null;
-
-        //        return;
-        //    }
-        //}
     }
 }
 
@@ -64,6 +56,7 @@ public partial struct UnitDetectionJob : IJobEntity
 {
     public DetectionCollisionFiltersComponent unitCollisionFilters;
     [ReadOnly] public CollisionWorld collisionWorld;
+    [ReadOnly] public ComponentLookup<UnitMovementComponent> unitMovementComponentLookup;
 
     [BurstCompile]
     public void Execute(ref TowerRadiusComponent towerRadius, ref LocalTransform localTransform, ref TargetComponent towerTarget)
@@ -75,8 +68,28 @@ public partial struct UnitDetectionJob : IJobEntity
         if (unitHits.Length == 0)
             return;
 
-        float minDistance = float.MaxValue;
-        int minDistanceIndex = 0;
+        //float minDistance = float.MaxValue; /// CLOSE TARGETING
+        //int minDistanceIndex = 0;
+        //int i = 0;
+
+        //foreach (DistanceHit hit in unitHits)
+        //{
+        //    if (hit.Fraction < 0.1f)
+        //        continue;
+
+        //    if (minDistance > hit.Fraction)
+        //    {
+        //        minDistance = hit.Fraction;
+        //        minDistanceIndex = i;
+        //    }
+
+        //    i++;
+        //}
+
+        Debug.Log("1");
+
+        float maxTime = float.MinValue; /// FIRST TARGETING
+        int maxTimeIndex = 0;
         int i = 0;
 
         foreach (DistanceHit hit in unitHits)
@@ -84,15 +97,17 @@ public partial struct UnitDetectionJob : IJobEntity
             if (hit.Fraction < 0.1f)
                 continue;
 
-            if (minDistance > hit.Fraction)
+            var movementComponent = unitMovementComponentLookup[hit.Entity];
+
+            if (maxTime < movementComponent.Time)
             {
-                minDistance = hit.Fraction;
-                minDistanceIndex = i;
+                maxTime = movementComponent.Time;
+                maxTimeIndex = i;
             }
 
             i++;
         }
 
-        towerTarget.enemy = unitHits[minDistanceIndex].Entity;
+        towerTarget.enemy = unitHits[maxTimeIndex].Entity;
     }
 }

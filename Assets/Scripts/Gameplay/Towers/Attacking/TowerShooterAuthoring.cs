@@ -1,4 +1,9 @@
+using GC.Spline;
 using Unity.Entities;
+using Unity.Entities.UniversalDelegates;
+using Unity.Mathematics;
+using UnityEditor;
+using UnityEditor.EditorTools;
 using UnityEngine;
 
 public class TowerShooterAuthoring : MonoBehaviour
@@ -15,6 +20,18 @@ public class TowerShooterAuthoring : MonoBehaviour
     public float lifeTime;
 
     public float speed;
+
+    #region Gizmos
+#if UNITY_EDITOR
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = new Color(1, 1, 0, 0.5f);
+        Gizmos.DrawWireSphere(transform.position, speed * lifeTime);
+    }
+
+#endif
+    #endregion
 }
 
 public class TowerShooterBaker : Baker<TowerShooterAuthoring>

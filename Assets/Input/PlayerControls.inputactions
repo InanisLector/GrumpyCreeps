@@ -33,9 +33,9 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "FreeCursor",
+                    "name": "SwitchCamera",
                     "type": "Button",
-                    "id": "1cde93b4-144e-4b5b-9a68-66ae42cac21c",
+                    "id": "43d894a9-7259-4024-ac66-06caf814e706",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -133,23 +133,23 @@
                 },
                 {
                     "name": "",
-                    "id": "215aafb5-eb7c-4f8a-99ef-172a4af913e3",
-                    "path": "<Keyboard>/leftAlt",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Camera",
-                    "action": "FreeCursor",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "43d6dda6-3bbd-4137-aef9-c8e23565784d",
                     "path": "<Pointer>/delta",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1ecfe1c9-823d-4a9e-9565-ea0e3ffaa145",
+                    "path": "<Keyboard>/rightAlt",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchCamera",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

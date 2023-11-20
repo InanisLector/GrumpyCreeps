@@ -36,7 +36,7 @@ public partial struct BuildDetectionBounds : IJobEntity
     public TeamComponent team;
 
     [BurstCompile]
-    public void Execute(Unity.Physics.Aspects.ColliderAspect collider, PlayerTag tag, TeamComponent team)
+    public void Execute(Unity.Physics.Aspects.ColliderAspect collider, UnitTag tag, TeamComponent team)
     {
 
     }

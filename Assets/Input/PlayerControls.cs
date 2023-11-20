@@ -55,9 +55,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""FreeCursor"",
+                    ""name"": ""SwitchCamera"",
                     ""type"": ""Button"",
-                    ""id"": ""1cde93b4-144e-4b5b-9a68-66ae42cac21c"",
+                    ""id"": ""43d894a9-7259-4024-ac66-06caf814e706"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -155,23 +155,23 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""215aafb5-eb7c-4f8a-99ef-172a4af913e3"",
-                    ""path"": ""<Keyboard>/leftAlt"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Camera"",
-                    ""action"": ""FreeCursor"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""43d6dda6-3bbd-4137-aef9-c8e23565784d"",
                     ""path"": ""<Pointer>/delta"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1ecfe1c9-823d-4a9e-9565-ea0e3ffaa145"",
+                    ""path"": ""<Keyboard>/rightAlt"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchCamera"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -191,7 +191,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Camera_SpeedUp = m_Camera.FindAction("SpeedUp", throwIfNotFound: true);
         m_Camera_Move = m_Camera.FindAction("Move", throwIfNotFound: true);
         m_Camera_Look = m_Camera.FindAction("Look", throwIfNotFound: true);
-        m_Camera_FreeCursor = m_Camera.FindAction("FreeCursor", throwIfNotFound: true);
+        m_Camera_SwitchCamera = m_Camera.FindAction("SwitchCamera", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -256,7 +256,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Camera_SpeedUp;
     private readonly InputAction m_Camera_Move;
     private readonly InputAction m_Camera_Look;
-    private readonly InputAction m_Camera_FreeCursor;
+    private readonly InputAction m_Camera_SwitchCamera;
     public struct CameraActions
     {
         private @PlayerControls m_Wrapper;
@@ -264,7 +264,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @SpeedUp => m_Wrapper.m_Camera_SpeedUp;
         public InputAction @Move => m_Wrapper.m_Camera_Move;
         public InputAction @Look => m_Wrapper.m_Camera_Look;
-        public InputAction @FreeCursor => m_Wrapper.m_Camera_FreeCursor;
+        public InputAction @SwitchCamera => m_Wrapper.m_Camera_SwitchCamera;
         public InputActionMap Get() { return m_Wrapper.m_Camera; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -283,9 +283,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Look.started += instance.OnLook;
             @Look.performed += instance.OnLook;
             @Look.canceled += instance.OnLook;
-            @FreeCursor.started += instance.OnFreeCursor;
-            @FreeCursor.performed += instance.OnFreeCursor;
-            @FreeCursor.canceled += instance.OnFreeCursor;
+            @SwitchCamera.started += instance.OnSwitchCamera;
+            @SwitchCamera.performed += instance.OnSwitchCamera;
+            @SwitchCamera.canceled += instance.OnSwitchCamera;
         }
 
         private void UnregisterCallbacks(ICameraActions instance)
@@ -299,9 +299,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Look.started -= instance.OnLook;
             @Look.performed -= instance.OnLook;
             @Look.canceled -= instance.OnLook;
-            @FreeCursor.started -= instance.OnFreeCursor;
-            @FreeCursor.performed -= instance.OnFreeCursor;
-            @FreeCursor.canceled -= instance.OnFreeCursor;
+            @SwitchCamera.started -= instance.OnSwitchCamera;
+            @SwitchCamera.performed -= instance.OnSwitchCamera;
+            @SwitchCamera.canceled -= instance.OnSwitchCamera;
         }
 
         public void RemoveCallbacks(ICameraActions instance)
@@ -333,6 +333,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnSpeedUp(InputAction.CallbackContext context);
         void OnMove(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
-        void OnFreeCursor(InputAction.CallbackContext context);
+        void OnSwitchCamera(InputAction.CallbackContext context);
     }
 }

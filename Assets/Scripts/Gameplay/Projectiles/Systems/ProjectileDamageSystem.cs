@@ -28,9 +28,9 @@ public partial struct ProjectileDamageSystem : ISystem
     [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
-        //EntityCommandBuffer ecb =
-        //    SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>().CreateCommandBuffer(state.WorldUnmanaged);
-        EntityCommandBuffer ecb = new EntityCommandBuffer(Allocator.TempJob);
+        EntityCommandBuffer ecb =
+            SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>().CreateCommandBuffer(state.WorldUnmanaged);
+        //EntityCommandBuffer ecb = new EntityCommandBuffer(Allocator.TempJob);
         SimulationSingleton simulation = SystemAPI.GetSingleton<SimulationSingleton>();
 
         healthLookup.Update(ref state);
@@ -48,8 +48,8 @@ public partial struct ProjectileDamageSystem : ISystem
 
         state.Dependency.Complete();
 
-        ecb.Playback(state.EntityManager);
-        ecb.Dispose();
+        //ecb.Playback(state.EntityManager);
+        //ecb.Dispose();
 
         //Debug.Log("1");
     }
@@ -113,7 +113,7 @@ public struct ProjectileHitJob : ITriggerEventsJob
         if (damage.pierce <= hitList[projectile].Length)
         {
             deadEntities.Add(projectile);
-            ECB.DestroyEntity(projectile);
+            ECB.AddComponent(projectile, new IsDisposingComponent());
         }
     }
 

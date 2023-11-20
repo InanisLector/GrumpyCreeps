@@ -155,7 +155,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c68acb6085c1d2b40849aae68dfcfe05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 10
+  Speed: 22.3
   SplineIndex: 0
 --- !u!65 &529808837
 BoxCollider:
@@ -237,7 +237,7 @@ Transform:
   m_GameObject: {fileID: 529808835}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -7.8, y: 0, z: -4.5}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -447,53 +447,104 @@ MonoBehaviour:
       y: 0
       z: 0
     FirstInterpolationPoint:
-      x: 29.85
+      x: 11.046082
       y: 0
-      z: 30.59
+      z: -26.612247
     SecondInterpolationPoint:
-      x: 55
+      x: 96.51816
       y: 0
-      z: 22.57
+      z: 10.40855
     EndPoint:
-      x: 79.18
+      x: 95.06335
       y: 0
-      z: 0
+      z: -4.4521704
   - StartPoint:
-      x: 79.18
+      x: 95.06335
       y: 0
-      z: 0
+      z: -4.4521704
     FirstInterpolationPoint:
-      x: 151.69
+      x: 89.609375
       y: 0
-      z: -41.81
+      z: -67.67297
     SecondInterpolationPoint:
-      x: 98.64
+      x: 92.58774
       y: 0
-      z: -181.49
+      z: -81.83149
     EndPoint:
-      x: 60.58
+      x: 79.091125
       y: 0
-      z: -72.5
+      z: -74.72162
   - StartPoint:
-      x: 60.58
+      x: 79.091125
       y: 0
-      z: -72.5
+      z: -74.72162
     FirstInterpolationPoint:
-      x: 197.88
+      x: 59.99401
       y: 0
-      z: -41.81
+      z: -62.205208
     SecondInterpolationPoint:
-      x: 98.64
+      x: 33.130913
       y: 0
-      z: -181.49
+      z: -41.2125
     EndPoint:
-      x: 40.7
+      x: 54.438736
       y: 0
-      z: -98.7
-  brokenLinePointColor: {r: 0, g: 255, b: 0, a: 255}
-  splineColor: {r: 255, g: 0, b: 0, a: 255}
-  linearSplineColor: {r: 255, g: 0, b: 255, a: 255}
-  gizmosIconSize: 0.2
+      z: -110.1185
+  - StartPoint:
+      x: 54.438736
+      y: 0
+      z: -110.1185
+    FirstInterpolationPoint:
+      x: 64.14729
+      y: 0
+      z: -142.17926
+    SecondInterpolationPoint:
+      x: 73.11584
+      y: 0
+      z: -134.84099
+    EndPoint:
+      x: 100.92347
+      y: 0
+      z: -114.24943
+  - StartPoint:
+      x: 100.92347
+      y: 0
+      z: -114.24943
+    FirstInterpolationPoint:
+      x: 118.17545
+      y: 0
+      z: -99.9426
+    SecondInterpolationPoint:
+      x: 118.77084
+      y: -11.774631
+      z: -67.48053
+    EndPoint:
+      x: 83.096214
+      y: -8.788172
+      z: -20.817993
+  - StartPoint:
+      x: 83.096214
+      y: -8.788172
+      z: -20.817993
+    FirstInterpolationPoint:
+      x: 69.37657
+      y: -8.788172
+      z: -2.2274551
+    SecondInterpolationPoint:
+      x: 35.075912
+      y: 0
+      z: -17.573828
+    EndPoint:
+      x: 67.05573
+      y: 0
+      z: -34.057487
+  drawBrokenLinePoint: 0
+  brokenLinePointColor: {r: 0.6285014, g: 0, b: 1, a: 255}
+  splineLinePointSize: 0.42
+  splineColor: {r: 0, g: 0.7488086, b: 1, a: 255}
+  linearSplineColor: {r: 1, g: 0.9895288, b: 0, a: 255}
+  splineLeverSize: 1
+  drawSplineSegmentPoints: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

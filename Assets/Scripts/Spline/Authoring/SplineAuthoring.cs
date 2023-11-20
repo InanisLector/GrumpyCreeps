@@ -1,12 +1,14 @@
-using GC.Spline;
 using System.Collections.Generic;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
+using UnityEngine;
+
+#if UNITY_EDITOR
 using UnityEditor;
 using UnityEditor.EditorTools;
 using UnityEditor.ShortcutManagement;
-using UnityEngine;
+#endif
 
 namespace GC.Spline
 {
@@ -142,6 +144,12 @@ namespace GC.Spline
     {
         public override void Bake(SplineAuthoring authoring)
         {
+            if (authoring.SplineSegments.Count == 0)
+            {
+                Debug.LogError($"Your spline {authoring.gameObject} has no segments in it");
+                return;
+            }
+
             Entity entity = GetEntity(TransformUsageFlags.Dynamic);
 
             Spline spline = new Spline();

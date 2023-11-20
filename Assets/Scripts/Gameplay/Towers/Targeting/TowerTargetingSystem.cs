@@ -1,9 +1,7 @@
 using Unity.Burst;
-using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
-using UnityEngine;
 
 public partial struct TowerTargetingSystem : ISystem
 {
@@ -23,9 +21,6 @@ public partial struct TowerTargetingSystem : ISystem
     [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
-        var unitCollisionFilters =
-            SystemAPI.GetSingleton<DetectionCollisionFiltersComponent>();
-
         localTransformLookup.Update(ref state);
         entityStorageInfo.Update(ref state);
 
@@ -48,6 +43,7 @@ public partial struct TowerTargetingSystem : ISystem
 
                 continue;
             }
+
         }
     }
 }
