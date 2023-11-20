@@ -28,9 +28,11 @@ public partial struct TowerUnitDetectionSystem : ISystem
     [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
-        var unitCollisionFilters =
-            SystemAPI.GetSingleton<DetectionCollisionFiltersComponent>();
+        DetectionCollisionFiltersComponent unitCollisionFilters;
 
+        if (!SystemAPI.TryGetSingleton(out unitCollisionFilters))
+            return;
+            
         localTransformLookup.Update(ref state);
         unitMovementComponentLookup.Update(ref state);
         entityStorageInfo.Update(ref state);

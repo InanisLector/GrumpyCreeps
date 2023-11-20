@@ -14,7 +14,7 @@ namespace GC.Spline
 
             AddComponent(entity, new SplineContainer
             {
-                Splines = new NativeList<Spline>(Allocator.Persistent),
+                Splines = new NativeArray<Spline>(),
                 IsSetUp = false,
             });
         }

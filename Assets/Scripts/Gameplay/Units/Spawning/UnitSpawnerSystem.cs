@@ -19,11 +19,22 @@ public partial struct UnitSpawnerSystem : ISystem
     {
         // get singleton of unit wave
 
-        EntityCommandBuffer entityCommandBuffer = 
-            SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>().CreateCommandBuffer(state.World.Unmanaged);
+        BeginSimulationEntityCommandBufferSystem.Singleton buggerSystemSingletone;
 
-        SplineContainer splineContainer = SystemAPI.GetSingleton<SplineContainer>();
-        UnitDeckComponent unitDeck = SystemAPI.GetSingleton<UnitDeckComponent>();
+        if (!SystemAPI.TryGetSingleton(out buggerSystemSingletone))
+            return;
+
+        EntityCommandBuffer entityCommandBuffer = buggerSystemSingletone.CreateCommandBuffer(state.World.Unmanaged);
+
+        SplineContainer splineContainer;
+
+        if (!SystemAPI.TryGetSingleton(out splineContainer))
+            return;
+
+        UnitDeckComponent unitDeck;
+
+        if (!SystemAPI.TryGetSingleton(out unitDeck))
+            return;
 
         unitDeckIndexLookup.Update(ref state);
 

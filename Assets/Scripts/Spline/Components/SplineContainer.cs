@@ -7,7 +7,7 @@ namespace GC.Spline
     [ChunkSerializable]
     public struct SplineContainer : IComponentData
     {
-        public NativeList<Spline> Splines;
+        public NativeArray<Spline> Splines;
 
         public bool IsSetUp;
 

@@ -18,9 +18,12 @@ namespace GC.Units.Movement
         [BurstCompile]
         private void OnUpdate(ref SystemState state)
         {
-            SplineContainer splineContainer = SystemAPI.GetSingleton<SplineContainer>();
+            SplineContainer splineContainer;
 
-            if (splineContainer.IsSetUp == false)
+            if (!SystemAPI.TryGetSingleton(out splineContainer))
+                return;
+
+            if (!splineContainer.IsSetUp)
                 return;
 
             foreach ((RefRW<UnitMovementComponent> movement, RefRW<LocalTransform> transform) in SystemAPI.Query<RefRW<UnitMovementComponent>, RefRW<LocalTransform>>())
