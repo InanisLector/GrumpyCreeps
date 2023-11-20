@@ -68,28 +68,8 @@ public partial struct UnitDetectionJob : IJobEntity
         if (unitHits.Length == 0)
             return;
 
-        //float minDistance = float.MaxValue; /// CLOSE TARGETING
-        //int minDistanceIndex = 0;
-        //int i = 0;
-
-        //foreach (DistanceHit hit in unitHits)
-        //{
-        //    if (hit.Fraction < 0.1f)
-        //        continue;
-
-        //    if (minDistance > hit.Fraction)
-        //    {
-        //        minDistance = hit.Fraction;
-        //        minDistanceIndex = i;
-        //    }
-
-        //    i++;
-        //}
-
-        Debug.Log("1");
-
-        float maxTime = float.MinValue; /// FIRST TARGETING
-        int maxTimeIndex = 0;
+        float minDistance = float.MaxValue; /// CLOSE TARGETING
+        int minDistanceIndex = 0;
         int i = 0;
 
         foreach (DistanceHit hit in unitHits)
@@ -97,17 +77,37 @@ public partial struct UnitDetectionJob : IJobEntity
             if (hit.Fraction < 0.1f)
                 continue;
 
-            var movementComponent = unitMovementComponentLookup[hit.Entity];
-
-            if (maxTime < movementComponent.Time)
+            if (minDistance > hit.Fraction)
             {
-                maxTime = movementComponent.Time;
-                maxTimeIndex = i;
+                minDistance = hit.Fraction;
+                minDistanceIndex = i;
             }
 
             i++;
         }
+        //
+        //Debug.Log("1");
 
-        towerTarget.enemy = unitHits[maxTimeIndex].Entity;
+        //float maxTime = float.MinValue; /// FIRST TARGETING
+        //int maxTimeIndex = 0;
+        //int i = 0;
+
+        //foreach (DistanceHit hit in unitHits)
+        //{
+        //    if (hit.Fraction < 0.1f)
+        //        continue;
+
+        //    var movementComponent = unitMovementComponentLookup[hit.Entity];
+
+        //    if (maxTime < movementComponent.Time)
+        //    {
+        //        maxTime = movementComponent.Time;
+        //        maxTimeIndex = i;
+        //    }
+
+        //    i++;
+        //}
+
+        towerTarget.enemy = unitHits[minDistanceIndex].Entity;
     }
 }

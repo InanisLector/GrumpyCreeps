@@ -174,6 +174,54 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Towers",
+            "id": "3e790966-4b79-489e-aa4c-aa79867d6203",
+            "actions": [
+                {
+                    "name": "MousePosition",
+                    "type": "Value",
+                    "id": "738fd747-5b55-4bc5-b95a-a783fe6e2906",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "PlaceTower",
+                    "type": "Button",
+                    "id": "b7a4119c-9f5c-469d-8c7a-606d0c0f95e9",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "f2ed6302-bc5f-4243-8588-5a32c26844c8",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MousePosition",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "19f77987-1903-4ba4-8878-5dfb002cb6ed",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PlaceTower",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [

@@ -18,7 +18,7 @@ public partial struct DisposingSystem : ISystem
             SystemAPI.GetSingleton<EndSimulationEntityCommandBufferSystem.Singleton>().CreateCommandBuffer(state.WorldUnmanaged);
 
         //EntityCommandBuffer ecb = new EntityCommandBuffer(Allocator.Temp);
-        Debug.Log("2");
+        //Debug.Log("2");
         foreach ((IsDisposingComponent isDisposing, Entity entity) in SystemAPI.Query<IsDisposingComponent>().WithEntityAccess())
         {
             ecb.DestroyEntity(entity);

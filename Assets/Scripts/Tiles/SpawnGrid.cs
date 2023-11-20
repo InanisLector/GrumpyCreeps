@@ -10,7 +10,7 @@ public class SpawnGrid : MonoBehaviour
 
     private void Start()
     {
-        var grid = this.GetComponent<Grid>();
+        var grid = this.GetComponent<UnityEngine.Grid>();
 
         var rotation = Quaternion.Euler(90, 0, 0);
 

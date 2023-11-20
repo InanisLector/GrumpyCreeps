@@ -196,6 +196,54 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Towers"",
+            ""id"": ""3e790966-4b79-489e-aa4c-aa79867d6203"",
+            ""actions"": [
+                {
+                    ""name"": ""MousePosition"",
+                    ""type"": ""Value"",
+                    ""id"": ""738fd747-5b55-4bc5-b95a-a783fe6e2906"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""PlaceTower"",
+                    ""type"": ""Button"",
+                    ""id"": ""b7a4119c-9f5c-469d-8c7a-606d0c0f95e9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""f2ed6302-bc5f-4243-8588-5a32c26844c8"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MousePosition"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""19f77987-1903-4ba4-8878-5dfb002cb6ed"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PlaceTower"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -213,6 +261,10 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Camera_Look = m_Camera.FindAction("Look", throwIfNotFound: true);
         m_Camera_SwitchCamera = m_Camera.FindAction("SwitchCamera", throwIfNotFound: true);
         m_Camera_Enable7Ttower = m_Camera.FindAction("Enable 7T tower", throwIfNotFound: true);
+        // Towers
+        m_Towers = asset.FindActionMap("Towers", throwIfNotFound: true);
+        m_Towers_MousePosition = m_Towers.FindAction("MousePosition", throwIfNotFound: true);
+        m_Towers_PlaceTower = m_Towers.FindAction("PlaceTower", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -278,7 +330,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Camera_Move;
     private readonly InputAction m_Camera_Look;
     private readonly InputAction m_Camera_SwitchCamera;
-    private readonly InputAction m_Camera_FreeCursor;
     private readonly InputAction m_Camera_Enable7Ttower;
     public struct CameraActions
     {
@@ -288,7 +339,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_Camera_Move;
         public InputAction @Look => m_Wrapper.m_Camera_Look;
         public InputAction @SwitchCamera => m_Wrapper.m_Camera_SwitchCamera;
-        public InputAction @FreeCursor => m_Wrapper.m_Camera_FreeCursor;
         public InputAction @Enable7Ttower => m_Wrapper.m_Camera_Enable7Ttower;
         public InputActionMap Get() { return m_Wrapper.m_Camera; }
         public void Enable() { Get().Enable(); }
@@ -311,9 +361,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @SwitchCamera.started += instance.OnSwitchCamera;
             @SwitchCamera.performed += instance.OnSwitchCamera;
             @SwitchCamera.canceled += instance.OnSwitchCamera;
-            @FreeCursor.started += instance.OnFreeCursor;
-            @FreeCursor.performed += instance.OnFreeCursor;
-            @FreeCursor.canceled += instance.OnFreeCursor;
             @Enable7Ttower.started += instance.OnEnable7Ttower;
             @Enable7Ttower.performed += instance.OnEnable7Ttower;
             @Enable7Ttower.canceled += instance.OnEnable7Ttower;
@@ -333,9 +380,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @SwitchCamera.started -= instance.OnSwitchCamera;
             @SwitchCamera.performed -= instance.OnSwitchCamera;
             @SwitchCamera.canceled -= instance.OnSwitchCamera;
-            @FreeCursor.started -= instance.OnFreeCursor;
-            @FreeCursor.performed -= instance.OnFreeCursor;
-            @FreeCursor.canceled -= instance.OnFreeCursor;
             @Enable7Ttower.started -= instance.OnEnable7Ttower;
             @Enable7Ttower.performed -= instance.OnEnable7Ttower;
             @Enable7Ttower.canceled -= instance.OnEnable7Ttower;
@@ -356,6 +400,60 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         }
     }
     public CameraActions @Camera => new CameraActions(this);
+
+    // Towers
+    private readonly InputActionMap m_Towers;
+    private List<ITowersActions> m_TowersActionsCallbackInterfaces = new List<ITowersActions>();
+    private readonly InputAction m_Towers_MousePosition;
+    private readonly InputAction m_Towers_PlaceTower;
+    public struct TowersActions
+    {
+        private @PlayerControls m_Wrapper;
+        public TowersActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @MousePosition => m_Wrapper.m_Towers_MousePosition;
+        public InputAction @PlaceTower => m_Wrapper.m_Towers_PlaceTower;
+        public InputActionMap Get() { return m_Wrapper.m_Towers; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(TowersActions set) { return set.Get(); }
+        public void AddCallbacks(ITowersActions instance)
+        {
+            if (instance == null || m_Wrapper.m_TowersActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_TowersActionsCallbackInterfaces.Add(instance);
+            @MousePosition.started += instance.OnMousePosition;
+            @MousePosition.performed += instance.OnMousePosition;
+            @MousePosition.canceled += instance.OnMousePosition;
+            @PlaceTower.started += instance.OnPlaceTower;
+            @PlaceTower.performed += instance.OnPlaceTower;
+            @PlaceTower.canceled += instance.OnPlaceTower;
+        }
+
+        private void UnregisterCallbacks(ITowersActions instance)
+        {
+            @MousePosition.started -= instance.OnMousePosition;
+            @MousePosition.performed -= instance.OnMousePosition;
+            @MousePosition.canceled -= instance.OnMousePosition;
+            @PlaceTower.started -= instance.OnPlaceTower;
+            @PlaceTower.performed -= instance.OnPlaceTower;
+            @PlaceTower.canceled -= instance.OnPlaceTower;
+        }
+
+        public void RemoveCallbacks(ITowersActions instance)
+        {
+            if (m_Wrapper.m_TowersActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(ITowersActions instance)
+        {
+            foreach (var item in m_Wrapper.m_TowersActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_TowersActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public TowersActions @Towers => new TowersActions(this);
     private int m_CameraSchemeIndex = -1;
     public InputControlScheme CameraScheme
     {
@@ -371,7 +469,11 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
         void OnSwitchCamera(InputAction.CallbackContext context);
-        void OnFreeCursor(InputAction.CallbackContext context);
         void OnEnable7Ttower(InputAction.CallbackContext context);
+    }
+    public interface ITowersActions
+    {
+        void OnMousePosition(InputAction.CallbackContext context);
+        void OnPlaceTower(InputAction.CallbackContext context);
     }
 }
