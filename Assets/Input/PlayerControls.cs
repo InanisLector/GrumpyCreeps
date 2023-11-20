@@ -62,6 +62,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Enable 7T tower"",
+                    ""type"": ""Button"",
+                    ""id"": ""1b1ab1ff-3441-47c6-b2b7-d879434ea663"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -174,6 +183,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Look"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""98836efc-4c6e-4a1c-961a-2e29f7af3390"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Enable 7T tower"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -192,6 +212,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Camera_Move = m_Camera.FindAction("Move", throwIfNotFound: true);
         m_Camera_Look = m_Camera.FindAction("Look", throwIfNotFound: true);
         m_Camera_FreeCursor = m_Camera.FindAction("FreeCursor", throwIfNotFound: true);
+        m_Camera_Enable7Ttower = m_Camera.FindAction("Enable 7T tower", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -257,6 +278,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Camera_Move;
     private readonly InputAction m_Camera_Look;
     private readonly InputAction m_Camera_FreeCursor;
+    private readonly InputAction m_Camera_Enable7Ttower;
     public struct CameraActions
     {
         private @PlayerControls m_Wrapper;
@@ -265,6 +287,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_Camera_Move;
         public InputAction @Look => m_Wrapper.m_Camera_Look;
         public InputAction @FreeCursor => m_Wrapper.m_Camera_FreeCursor;
+        public InputAction @Enable7Ttower => m_Wrapper.m_Camera_Enable7Ttower;
         public InputActionMap Get() { return m_Wrapper.m_Camera; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -286,6 +309,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @FreeCursor.started += instance.OnFreeCursor;
             @FreeCursor.performed += instance.OnFreeCursor;
             @FreeCursor.canceled += instance.OnFreeCursor;
+            @Enable7Ttower.started += instance.OnEnable7Ttower;
+            @Enable7Ttower.performed += instance.OnEnable7Ttower;
+            @Enable7Ttower.canceled += instance.OnEnable7Ttower;
         }
 
         private void UnregisterCallbacks(ICameraActions instance)
@@ -302,6 +328,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @FreeCursor.started -= instance.OnFreeCursor;
             @FreeCursor.performed -= instance.OnFreeCursor;
             @FreeCursor.canceled -= instance.OnFreeCursor;
+            @Enable7Ttower.started -= instance.OnEnable7Ttower;
+            @Enable7Ttower.performed -= instance.OnEnable7Ttower;
+            @Enable7Ttower.canceled -= instance.OnEnable7Ttower;
         }
 
         public void RemoveCallbacks(ICameraActions instance)
@@ -334,5 +363,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
         void OnFreeCursor(InputAction.CallbackContext context);
+        void OnEnable7Ttower(InputAction.CallbackContext context);
     }
 }
