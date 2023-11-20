@@ -6,6 +6,7 @@ public class Look : MonoBehaviour
     private PlayerControls controls;
 
     [HideInInspector] public bool canRotateCamera;
+    private bool isDebugCamera = false;
 
     [SerializeField] private Camera cam;
     [SerializeField] private float sensX;
@@ -23,30 +24,23 @@ public class Look : MonoBehaviour
     {
         controls = new PlayerControls();
         controls.Camera.Enable();
-
-        controls.Camera.FreeCursor.performed += ControlCursor;
-        //UpdateFOV();
     }
     private void OnDestroy()
     {
-        controls.Camera.FreeCursor.performed -= ControlCursor;
     }
 
 
     private void Update()
     {
+        if (!isDebugCamera)
+            return;
+
         GetInput();
         UpdateCamera();
     }
 
     private void GetInput()
         => inputVector = controls.Camera.Look.ReadValue<Vector2>();
-
-    //public void UpdateFOV()
-    //{
-    //    cam.fieldOfView = Settings.FOV;
-    //}
-
 
     private void UpdateCamera()
     {
@@ -69,25 +63,32 @@ public class Look : MonoBehaviour
     }
 
 
-    //public void SetupEvents()
-    //{
-    //    player.OnDeath += DisableLook;
-    //    player.OnRespawn += EnableLook;
-
-    //}
-
-    private void ControlCursor(InputAction.CallbackContext context)
+    private void ControlCursor(CursorLockMode lockMode)
     {
-        if (Cursor.lockState == CursorLockMode.Locked)
+        Cursor.lockState = lockMode;
+
+        if (lockMode == CursorLockMode.Locked)
         {
-            Cursor.lockState = CursorLockMode.None;
-            canRotateCamera = false;
-        }
-        else if (Cursor.lockState == CursorLockMode.None)
-        {
-            Cursor.lockState = CursorLockMode.Locked;
             canRotateCamera = true;
         }
+        else if (lockMode == CursorLockMode.None)
+        {
+            canRotateCamera = false;
+        }
     }
+
+    public void SetWorkMode(bool isDebugCamera)
+    {
+        this.isDebugCamera = isDebugCamera;
+
+        if (isDebugCamera)
+        {
+            ControlCursor(CursorLockMode.Locked);
+        }
+        else
+        {
+            ControlCursor(CursorLockMode.None);
+        }
+    } 
 }
 
