@@ -3,6 +3,7 @@ using GC.SplineMovement;
 using Unity.Collections;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+using System;
 
 namespace GC.Map
 {
@@ -13,9 +14,13 @@ namespace GC.Map
 
         public static bool FinishedCreatingMap = false;
 
+        private EntityManager entityManager;
+
         protected override void OnCreate()
         {
             base.OnCreate();
+
+            entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
         }
 
         protected override void OnUpdate()
@@ -35,38 +40,49 @@ namespace GC.Map
 
         private void CreateLevel()
         {
-            EntityManager entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
+            CreateSplines();
 
+            CreateSplineContainer();
+        }
+
+        private void CreateSplines()
+        {
             var splines = MapPrefab.Splines.GetComponentsInChildren<SplineAuthoring>();
 
             foreach (var spline in splines)
             {
-                CreateSpline(entityManager, spline.SplineSegments);
+                CreateSpline(spline.SplineSegments);
             }
-
-            CreateSplineContainer(EntityManager);
         }
 
-        private void CreateSpline(EntityManager entityManager, List<SplineSegment> splineSegments)
+        private void CreateSpline(List<SplineSegment> splineSegments)
         {
-            EntityArchetype archetype = entityManager.CreateArchetype(typeof(Spline));
-
-            Entity entity = entityManager.CreateEntity(archetype);
-
             Spline spline = new Spline();
 
             spline.Init(new NativeArray<SplineSegment>(splineSegments.ToArray(), Allocator.Persistent));
 
+            Entity entity = CreateEntityFromType(typeof(Spline));
+
             entityManager.SetComponentData(entity, spline);
         }
 
-        private void CreateSplineContainer(EntityManager entityManager)
+        private void CreateSplineContainer()
         {
-            EntityArchetype archetype = entityManager.CreateArchetype(typeof(SplineContainer));
-
-            Entity entity = entityManager.CreateEntity(archetype);
+            Entity entity = CreateEntityFromType(typeof(SplineContainer));
 
             entityManager.SetComponentData(entity, new SplineContainer());
+        }
+
+        private void CreateGrid()
+        {
+
+        }
+
+        private Entity CreateEntityFromType(Type type)
+        {
+            EntityArchetype archetype = entityManager.CreateArchetype(type);
+
+            return entityManager.CreateEntity(archetype);
         }
     }
 }
