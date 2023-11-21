@@ -1,7 +1,7 @@
 using System;
 using Unity.Mathematics;
 
-namespace GC.Spline
+namespace GC.SplineMovement
 {
     [Serializable]
     public struct SplineSegment

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: da85fb0b482bafc498d57690fc44f431, type: 3}
-  m_Name: Test
+  m_Name: TestMap
   m_EditorClassIdentifier: 
   SplineSegments: {fileID: 5895139906697913637, guid: ccd22f2ab55ceea49a2df55698b81cca,
     type: 3}

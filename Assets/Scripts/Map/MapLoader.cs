@@ -1,12 +1,15 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MapLoader : MonoBehaviour
+namespace GC.Map
 {
-    public void LoadMap(MapPrefab prefab)
+    public class MapLoader : MonoBehaviour
     {
-        GlobalSpawnerSystem.MapPrefab = prefab;
+        public void LoadMap(MapPrefab prefab)
+        {
+            GlobalSpawnerSystem.MapPrefab = prefab;
 
-        SceneManager.LoadScene("Testing");
+            SceneManager.LoadScene("Testing");
+        }
     }
 }

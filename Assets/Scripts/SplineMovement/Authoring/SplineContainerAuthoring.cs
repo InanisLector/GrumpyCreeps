@@ -2,7 +2,7 @@ using Unity.Collections;
 using Unity.Entities;
 using UnityEngine;
 
-namespace GC.Spline
+namespace GC.SplineMovement
 {
     public class SplineContainerAuthoring : MonoBehaviour { }
 

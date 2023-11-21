@@ -2,7 +2,7 @@ using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 
-namespace GC.Spline
+namespace GC.SplineMovement
 {
     [ChunkSerializable]
     public struct Spline : IComponentData

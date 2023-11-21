@@ -1,4 +1,4 @@
-using GC.Spline;
+using GC.SplineMovement;
 using Unity.Burst;
 using Unity.Entities;
 using Unity.Transforms;

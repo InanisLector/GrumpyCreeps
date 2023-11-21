@@ -2,8 +2,9 @@ using GC.Units.Movement;
 using Unity.Entities;
 using UnityEngine.SceneManagement;
 using Unity.Collections;
+using GC.Map;
 
-namespace GC.Spline
+namespace GC.SplineMovement
 {
     [UpdateBefore(typeof(UnitMovementSystem))]
     public partial class SplineInitializationSystem : SystemBase

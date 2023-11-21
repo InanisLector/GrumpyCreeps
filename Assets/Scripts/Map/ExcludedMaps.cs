@@ -1,9 +1,12 @@
 using System.Collections.Generic;
 
-public static class ExcludedMaps
+namespace GC.Map
 {
-    public static HashSet<string> SystemExclusion = new HashSet<string>()
+    public static class ExcludedMaps
     {
-        "MainMenu",
-    };
+        public static HashSet<string> SystemExclusion = new HashSet<string>()
+        {
+            "MainMenu",
+        };
+    }
 }
