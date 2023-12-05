@@ -1,9 +1,9 @@
-using Unity.Entities;
-using GC.SplineMovement;
-using Unity.Collections;
-using UnityEngine.SceneManagement;
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
+using UnityEngine.SceneManagement;
+using Unity.Entities;
+using Unity.Collections;
+using GC.SplineMovement;
 
 namespace GC.Map
 {
@@ -12,41 +12,65 @@ namespace GC.Map
     {
         public static MapPrefab MapPrefab;
 
-        public static bool FinishedCreatingMap = false;
+        public static Action OnMapDecoCreation;
+
+        private bool FinishedCreatingMap;
 
         private EntityManager entityManager;
 
         protected override void OnCreate()
         {
-            base.OnCreate();
-
             entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
+
+            FinishedCreatingMap = false;
+
+            SceneManager.sceneLoaded += TryCreateMap;
         }
 
-        protected override void OnUpdate()
+        protected override void OnUpdate(){}
+
+        private void TryCreateMap(Scene scene, LoadSceneMode mode)
         {
-            bool isExcludedScene = ExcludedMaps.SystemExclusion.Contains(SceneManager.GetActiveScene().name);
-
-            if (isExcludedScene)
-                return;
-
-            if (FinishedCreatingMap)
+            if (!CanStartCreatingMap(scene.name))
                 return;
 
             CreateLevel();
+        }
 
-            FinishedCreatingMap = true;
+        private bool CanStartCreatingMap(string sceneName)
+        {
+            bool isExcludedScene = ExcludedMaps.SystemExclusion.Contains(sceneName);
+
+            if (isExcludedScene)
+                return false;
+
+            if (FinishedCreatingMap)
+                return false;
+
+            if (MapPrefab == null)
+                return false;
+
+            return true;
         }
 
         private void CreateLevel()
         {
+            OnMapDecoCreation.Invoke();
+
             CreateSplines();
 
             CreateSplineContainer();
+
+            CreateGrid();
+
+            FinishedCreatingMap = true;
         }
 
         private void CreateSplines()
         {
+            if (MapPrefab.Splines == null)
+                return;
+
             var splines = MapPrefab.Splines.GetComponentsInChildren<SplineAuthoring>();
 
             foreach (var spline in splines)
@@ -78,7 +102,7 @@ namespace GC.Map
 
         }
 
-        private Entity CreateEntityFromType(Type type)
+        private Entity CreateEntityFromType(params ComponentType[] type)
         {
             EntityArchetype archetype = entityManager.CreateArchetype(type);
 
