@@ -11,7 +11,9 @@ namespace GC.SplineMovement
     {
         protected override void OnUpdate()
         {
-            if (ExcludedMaps.SystemExclusion.Contains(SceneManager.GetActiveScene().name))
+            var mapCheckSystem = World.DefaultGameObjectInjectionWorld.GetOrCreateSystemManaged<MapCheckingSystem>();
+
+            if (mapCheckSystem.CurrentMapType != MapType.Gameplay)
                 return;
 
             RefRW<SplineContainer> splineContainer;

@@ -9,7 +9,7 @@ namespace GC.Map
         {
             GlobalSpawnerSystem.MapPrefab = prefab;
 
-            SceneManager.LoadScene("Testing");
+            SceneManager.LoadScene("Gameplay_Testing");
         }
     }
 }

@@ -9,13 +9,13 @@ namespace GC.SplineMovement
     {
         public NativeArray<SplineSegment> SplineSegments;
 
-        private float _splineLength;
+        public float SplineLength;
 
         public void Init(NativeArray<SplineSegment> segments)
         {
             SplineSegments = segments;
 
-            _splineLength = 0f;
+            SplineLength = 0f;
 
             InitSpline();
 
@@ -41,7 +41,7 @@ namespace GC.SplineMovement
         {
             foreach (var segment in SplineSegments)
             {
-                _splineLength += segment.SplineData.brokenLinesPercents[^1];
+                SplineLength += segment.SplineData.brokenLinesPercents[^1];
             }
         }
 
@@ -74,7 +74,7 @@ namespace GC.SplineMovement
             {
                 float percent = SplineSegments[i].SplineData.brokenLinesPercents[^1];
 
-                if (time / _splineLength < percent / _splineLength)
+                if (time / SplineLength < percent / SplineLength)
                     return i;
             }
 

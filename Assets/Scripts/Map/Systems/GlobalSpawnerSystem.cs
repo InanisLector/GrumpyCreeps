@@ -39,9 +39,9 @@ namespace GC.Map
 
         private bool CanStartCreatingMap(string sceneName)
         {
-            bool isExcludedScene = ExcludedMaps.SystemExclusion.Contains(sceneName);
+            var mapCheckSystem = World.DefaultGameObjectInjectionWorld.GetExistingSystemManaged<MapCheckingSystem>();
 
-            if (isExcludedScene)
+            if (mapCheckSystem.CurrentMapType != MapType.Gameplay)
                 return false;
 
             if (FinishedCreatingMap)
