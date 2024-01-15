@@ -14,7 +14,7 @@ public class TowerShooterAuthoring : MonoBehaviour
 
     public float attackTime;
 
-    public uint damage;
+    public int damage;
     public ushort pierce;
 
     public float lifeTime;
