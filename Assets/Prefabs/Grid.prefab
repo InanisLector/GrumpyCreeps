@@ -59,5 +59,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   width: 20
   height: 20
-  hex: {fileID: 6568449100021294976, guid: 00914854f018097469fb4c4f86bda2d5, type: 3}
-  blandGeneration: 1
+  hex: {fileID: 11400000, guid: 1cd1f10aac880c64d9de34e8ede142ed, type: 2}

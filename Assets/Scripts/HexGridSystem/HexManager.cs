@@ -1,6 +1,4 @@
 using ScriptableObjects.Grid;
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace HexGridSystem
@@ -13,14 +11,10 @@ namespace HexGridSystem
         [SerializeField] private int width;
         [SerializeField] private int height;
         [Space]
-        [SerializeField] private GameObject hex;
-        [Space(2f)]
-        [SerializeField] private ITileSettings[,] tilesToGenerate;
-        [Space]
-        [SerializeField] private bool blandGeneration;
+        [SerializeField] private TileSriptableObject hex;
 
         private Grid _grid;
-        private IHexTile[,] _tiles;
+        private TileLogic[,] _tiles;
 
         #endregion
 
@@ -34,10 +28,7 @@ namespace HexGridSystem
         private void Start()
         {
             transform.position += _grid.CellToWorld(new(width, height)) * (-0.5f);
-            if (blandGeneration)
-                GenerateTilesWithSinceHexType();
-            else
-                GenerateTiles();
+            GenerateTiles();
         }
 
 
@@ -45,26 +36,21 @@ namespace HexGridSystem
 
         #region Private Implementations
 
-        private void GenerateTilesWithSinceHexType()
+        private void GenerateTiles()
         {
-            _tiles = new HexTile[width, height];
+            _tiles = new TileLogic[width, height];
 
             for (int y = 0; y < height; y++)
             {
                 for (int x = 0; x < width; x++)
                 {
-                    _tiles[x, y] = Instantiate(hex, _grid.CellToWorld(new(x, y)), Quaternion.identity, this.transform)
-                        .GetComponent<HexTile>();
+                    _tiles[x, y] = new TileLogic(hex.InitialState);
 
-                    _tiles[x, y].SetGridPosition(x, y);
+                    var tile = Instantiate(hex.Prefab, _grid.CellToWorld(new(x, y)), Quaternion.identity, this.transform);
+                    tile.GetComponent<TileBehaviourScript>().SetLogicParent(_tiles[x, y]);
                 }
 
             }
-        }
-
-        private void GenerateTiles()
-        {
-            
         }
 
         #endregion
@@ -84,18 +70,18 @@ namespace HexGridSystem
         public Vector3 TileToWorldPosition(Vector3Int position)
             => _grid.CellToWorld(position);
 
-        private IHexTile[] GetSurroundingTilesInDiameter(Vector3Int centerTilePosition, int radius)
+        private TileLogic[] GetSurroundingTilesInDiameter(Vector3Int centerTilePosition, int radius)
             => GetSurroundingTilesInDiameter(centerTilePosition.x, centerTilePosition.y, radius);
 
-        private IHexTile[] GetSurroundingTilesInDiameter(int centerTileX, int centerTileY, int diameter)
+        private TileLogic[] GetSurroundingTilesInDiameter(int centerTileX, int centerTileY, int diameter)
         {
             if (diameter == 0)
-                return new IHexTile[0];
+                return new TileLogic[0];
 
             int radius = diameter / 2;
 
             int size = diameter * (2 * radius + 1) - radius * (radius + 1);
-            var tiles = new IHexTile[size];
+            var tiles = new TileLogic[size];
             int centerIndex = size / 2;
 
 
@@ -145,7 +131,7 @@ namespace HexGridSystem
 
             foreach (var tile in tiles)
             {
-                tile.Select();
+                tile.StartedHoveringOnIt();
             }
         }
 
@@ -155,7 +141,7 @@ namespace HexGridSystem
 
             foreach (var tile in tiles)
             {
-                tile.Deselect();
+                tile.StoppedHoveringOnIt();
             }
         }
 

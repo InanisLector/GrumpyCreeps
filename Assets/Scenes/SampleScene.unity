@@ -415,7 +415,8 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: 48554ff86e8f1fb42853fecffc142b33,
             type: 2}
-          m_ObjectArgumentAssemblyTypeName: BuildingBase, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: ScriptableObjects.Building.BuildingBase,
+            Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -550,7 +551,8 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: aaf288ed89ef01f48958ba50c57a4a51,
             type: 2}
-          m_ObjectArgumentAssemblyTypeName: BuildingBase, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: ScriptableObjects.Building.BuildingBase,
+            Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -685,7 +687,8 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: 2e786ca2333403e44b773174a80fd5d2,
             type: 2}
-          m_ObjectArgumentAssemblyTypeName: BuildingBase, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: ScriptableObjects.Building.BuildingBase,
+            Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1211,7 +1214,8 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: 16fbeff6b74926e498e2cd59426c66cf,
             type: 2}
-          m_ObjectArgumentAssemblyTypeName: BuildingBase, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: ScriptableObjects.Building.BuildingBase,
+            Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1482,7 +1486,8 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: a32cef39654fd254c8ea0ac6a861aacd,
             type: 2}
-          m_ObjectArgumentAssemblyTypeName: BuildingBase, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: ScriptableObjects.Building.BuildingBase,
+            Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1710,7 +1715,8 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: f0c38833a283ac3449f47e0af0a76f43,
             type: 2}
-          m_ObjectArgumentAssemblyTypeName: BuildingBase, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: ScriptableObjects.Building.BuildingBase,
+            Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 

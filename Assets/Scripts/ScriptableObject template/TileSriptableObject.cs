@@ -1,31 +1,21 @@
 ﻿using UnityEngine;
+using HexGridSystem;
 
 namespace ScriptableObjects.Grid
 {
     [CreateAssetMenu(fileName = "Tile preset", menuName ="Tiles")]
-    public class TileSriptableObject : ScriptableObject, ITileSettings
+    public class TileSriptableObject : ScriptableObject
     {
         [SerializeField] private GameObject prefab;
         [SerializeField] private float initialVerticalOffset = 0f;
         [Space]
-        [SerializeField] private TileAvialability accessablity = TileAvialability.Available;
+        [SerializeField] private InitialTileState tileState;
 
         public GameObject Prefab
             => prefab;
         public float InitialVerticalOffset
             => initialVerticalOffset;
-
-        public bool Available
-            => accessablity != TileAvialability.UnAvailable;
-
-        public bool HasToBePurchased
-            => accessablity == TileAvialability.HasToBePurchased;
-    }
-
-    enum TileAvialability
-    { 
-        Available,
-        HasToBePurchased,
-        UnAvailable,
+        public InitialTileState InitialState 
+            => tileState;
     }
 }
