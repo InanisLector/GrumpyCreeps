@@ -46,7 +46,7 @@ namespace HexGridSystem
                 {
                     _tiles[x, y] = new TileLogic(hex.InitialState);
 
-                    var tile = Instantiate(hex.Prefab, _grid.CellToWorld(new(x, y)), Quaternion.identity, this.transform);
+                    var tile = Instantiate(hex.Prefab, _grid.CellToWorld(new(x, y, 0)), Quaternion.identity, this.transform);
                     tile.GetComponent<TileBehaviourScript>().SetLogicParent(_tiles[x, y]);
                 }
 
@@ -57,20 +57,21 @@ namespace HexGridSystem
 
         #region Public Implementations
         
-        public Vector3Int WorldPositionToTile(Vector3 position)
+        public Vector2Int WorldPositionToTile(Vector3 position)
         {
-            var gridPosition = _grid.WorldToCell(position);
+            Vector3Int unfilteredGridPosition = _grid.WorldToCell(position);
+            Vector2Int gridPosition = new(0, 0);
 
-            gridPosition.x = Mathf.Clamp(gridPosition.x, 0, width - 1);
-            gridPosition.y = Mathf.Clamp(gridPosition.y, 0, height - 1);
+            gridPosition.x = Mathf.Clamp(unfilteredGridPosition.x, 0, width - 1);
+            gridPosition.y = Mathf.Clamp(unfilteredGridPosition.y, 0, height - 1);
 
             return gridPosition;
         }
 
-        public Vector3 TileToWorldPosition(Vector3Int position)
-            => _grid.CellToWorld(position);
+        public Vector3 TileToWorldPosition(Vector2Int position)
+            => _grid.CellToWorld(new Vector3Int(position.x, position.y, 0));
 
-        private TileLogic[] GetSurroundingTilesInDiameter(Vector3Int centerTilePosition, int radius)
+        private TileLogic[] GetSurroundingTilesInDiameter(Vector2Int centerTilePosition, int radius)
             => GetSurroundingTilesInDiameter(centerTilePosition.x, centerTilePosition.y, radius);
 
         private TileLogic[] GetSurroundingTilesInDiameter(int centerTileX, int centerTileY, int diameter)
@@ -121,7 +122,7 @@ namespace HexGridSystem
             return tiles;
         }
 
-        public void SelectTilesInDiameter(Vector3Int centerTilePosition, int diameter)
+        public void SelectTilesInDiameter(Vector2Int centerTilePosition, int diameter)
         {
 
             var tiles = GetSurroundingTilesInDiameter(centerTilePosition, diameter);
@@ -135,13 +136,36 @@ namespace HexGridSystem
             }
         }
 
-        public void DeselectTilesInDiameter(Vector3Int centerTilePosition, int diameter)
+        public void DeselectTilesInDiameter(Vector2Int centerTilePosition, int diameter)
         {
             var tiles = GetSurroundingTilesInDiameter(centerTilePosition, diameter);
 
             foreach (var tile in tiles)
             {
                 tile.StoppedHoveringOnIt();
+            }
+        }
+
+        public bool CheckForVacancyInRadius(Vector2Int centerTilePosition, int diameter)
+        {
+            var tiles = GetSurroundingTilesInDiameter(centerTilePosition, diameter);
+
+            foreach(var tile in tiles)
+            {
+                if (!tile.IsVacant())
+                    return false;
+            }
+
+            return true;
+        }
+
+        public void AssignBuildingToTilesInRadius(Vector2Int centerTilePosition, int diameter, GameObject building)
+        {
+            var tiles = GetSurroundingTilesInDiameter(centerTilePosition, diameter);
+
+            foreach(var tile in tiles)
+            {
+                tile.AddBuilding(building);
             }
         }
 

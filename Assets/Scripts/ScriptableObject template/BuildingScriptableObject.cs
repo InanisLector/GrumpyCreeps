@@ -3,7 +3,7 @@ using UnityEngine;
 namespace ScriptableObjects.Building
 {
     [CreateAssetMenu(fileName = "BuildingBase", menuName = "Buildings")]
-    public class BuildingBase : ScriptableObject
+    public class BuildingScriptableObject : ScriptableObject
     {
         [SerializeField] private int cost;
         [SerializeField] private int size;

@@ -13,8 +13,6 @@ namespace ScriptableObjects.Grid
 
         public GameObject Prefab
             => prefab;
-        public float InitialVerticalOffset
-            => initialVerticalOffset;
         public InitialTileState InitialState 
             => tileState;
     }

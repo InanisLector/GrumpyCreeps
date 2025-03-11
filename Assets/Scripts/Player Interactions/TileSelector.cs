@@ -3,7 +3,7 @@ using HexGridSystem;
 using Zenject;
 using ScriptableObjects.Building;
 
-namespace PlayerInteractions.TileSelector
+namespace PlayerInteractions
 {
     public class TileSelector : MonoBehaviour
     {
@@ -13,8 +13,16 @@ namespace PlayerInteractions.TileSelector
         private PlayerControls _inputActions;
         private IHexGrid _hexGrid;
 
-        private Vector3Int? _currentTile;
+        private Vector2Int? _currentTile;
         private int _selectionDiameter = 0;
+
+        public Vector2Int CurrentTile { get
+            {
+                if (_currentTile != null)
+                    return _currentTile.Value;
+                return new(0, 0);
+            }
+        }
 
         private void Update()
         {
@@ -44,7 +52,7 @@ namespace PlayerInteractions.TileSelector
             }
         }
 
-        private Vector3Int? GetCurrentTile()
+        private Vector2Int? GetCurrentTile()
         {
             var plane = new Plane(Vector3.up, new Vector3(0, 0.2f, 0));
             var ray = playerCamera.ScreenPointToRay(_inputActions.Defender.MousePosition.ReadValue<Vector2>());
@@ -61,22 +69,24 @@ namespace PlayerInteractions.TileSelector
             return null;
         }
 
-        public void SetDiameter(BuildingBase building)
+        public void SetDiameter(int size)
         {
             if (_currentTile != null)
                 _hexGrid.DeselectTilesInDiameter(_currentTile.Value, _selectionDiameter);
 
-            if (building == null)
-            {
-                _selectionDiameter = 0;
-
-                return;
-            }
-
-            _selectionDiameter = building.Size;
+            _selectionDiameter = size;
 
             if(_currentTile != null)
                 _hexGrid.SelectTilesInDiameter(_currentTile.Value, _selectionDiameter);
+        }
+
+        // Null ref for building means it was deselected
+        public void SetDiameterForBuilding(BuildingScriptableObject? building)
+        {
+            if (building)
+                SetDiameter(building.Size);
+            else
+                SetDiameter(0);
         }
     }
 }

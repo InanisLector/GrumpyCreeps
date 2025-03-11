@@ -1,4 +1,5 @@
-﻿using HexGridSystem;
+﻿using GameFlow.GameManager;
+using HexGridSystem;
 using UnityEngine;
 using Zenject;
 
@@ -15,8 +16,13 @@ namespace Gameflow
 
             Container.BindInterfacesAndSelfTo<PlayerControls>().FromInstance(playerControls);
 
+
             var hexManager = Container.InstantiatePrefabForComponent<HexManager>(gridGameObject);
             Container.BindInterfacesAndSelfTo<IHexGrid>().FromInstance(hexManager);
+
+
+            var GameManager = new GameManager();
+            Container.BindInterfacesAndSelfTo<GameManager>().FromInstance(GameManager);
         }
     }
 }

@@ -11,6 +11,9 @@ namespace HexGridSystem
 
         public Action<bool> ToggleSelection;
 
+        public bool IsVacant()
+            => _tileState == TileState.processed || _tileState == TileState.hover;
+
         public void ClickedOnIt()
         {
             if (_tileState == TileState.unavailable)
@@ -61,11 +64,16 @@ namespace HexGridSystem
 
         public void AddBuilding(GameObject building)
         {
-            if (_tileState != TileState.occupied)
+            if (_tileState == TileState.occupied)
                 return;
 
             _building = building;
-            // Subscribe to building deletion event
+            
+            BuildingBase buildingScript = building.GetComponent<BuildingBase>();
+            if (buildingScript == null)
+                Debug.LogWarning("Gameobject without BuildingBase script");
+
+            buildingScript.CallOnDestrtoy += BuildingGetsDeleted;
 
             _tileState = TileState.occupied;
         }
@@ -74,7 +82,7 @@ namespace HexGridSystem
         {
             if (_building == null)
             {
-                Debug.LogError("Building deletiong continueity error: Tried deleting non-existent building");
+                Debug.LogError("Building deletion continueity error: Tried deleting non-existent building");
                 return;
             }
 

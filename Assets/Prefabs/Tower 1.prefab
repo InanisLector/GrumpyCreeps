@@ -117,6 +117,7 @@ GameObject:
   - component: {fileID: 7714989446170879690}
   - component: {fileID: 2370452591512591659}
   - component: {fileID: 4629769116836725199}
+  - component: {fileID: -9064617054702761430}
   m_Layer: 0
   m_Name: Tower 1
   m_TagString: Untagged
@@ -215,6 +216,19 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -1277366460620338370, guid: d8d157ebfb23cdf4ba94e99d8458f7d2, type: 3}
+--- !u!114 &-9064617054702761430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3442635184079681574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84ac7bd3cf668e444940ec66e9826a1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  size: 1
 --- !u!1 &7187591154013780195
 GameObject:
   m_ObjectHideFlags: 0

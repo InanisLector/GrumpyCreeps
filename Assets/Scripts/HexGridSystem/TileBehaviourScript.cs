@@ -18,7 +18,7 @@ namespace HexGridSystem
             _startPosition = this.transform.position;
             _endPosition = this.transform.position + offset;
         }
-
+        
         public void SetLogicParent(TileLogic tileLogic)
         {
             if (_tileLogic != null)
@@ -35,6 +35,8 @@ namespace HexGridSystem
         {
             if (toggle)
             {
+                if (!_tileLogic.IsVacant())
+                    return;
                 transform.DOMove(_endPosition, timeToMove);
             }
             else

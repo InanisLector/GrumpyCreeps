@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27dc0a18b42ac99499c6396c6cc128d2, type: 3}
   m_Name: Tile preset
   m_EditorClassIdentifier: 
-  prefab: {fileID: 0}
-  initialVerticalOffset: 0
-  tileState: 0
+  prefab: {fileID: 6568449100021294976, guid: 00914854f018097469fb4c4f86bda2d5, type: 3}
+  initialVerticalOffset: -2
+  tileState: 2

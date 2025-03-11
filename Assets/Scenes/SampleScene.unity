@@ -415,7 +415,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: 48554ff86e8f1fb42853fecffc142b33,
             type: 2}
-          m_ObjectArgumentAssemblyTypeName: ScriptableObjects.Building.BuildingBase,
+          m_ObjectArgumentAssemblyTypeName: ScriptableObjects.Building.BuildingScriptableObject,
             Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -551,7 +551,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: aaf288ed89ef01f48958ba50c57a4a51,
             type: 2}
-          m_ObjectArgumentAssemblyTypeName: ScriptableObjects.Building.BuildingBase,
+          m_ObjectArgumentAssemblyTypeName: ScriptableObjects.Building.BuildingScriptableObject,
             Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -687,7 +687,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: 2e786ca2333403e44b773174a80fd5d2,
             type: 2}
-          m_ObjectArgumentAssemblyTypeName: ScriptableObjects.Building.BuildingBase,
+          m_ObjectArgumentAssemblyTypeName: ScriptableObjects.Building.BuildingScriptableObject,
             Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -945,12 +945,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b787904a907767542836f67caa760965, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnBuildingSelectionToggle:
+  OnBuildingForConstructionSelectionToggle:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1892354987}
         m_TargetAssemblyTypeName: PlayerInteractions.TileSelector.TileSelector, Assembly-CSharp
-        m_MethodName: SetDiameter
+        m_MethodName: SetDiameterForBuilding
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1892354989}
+        m_TargetAssemblyTypeName: PlayerInteractions.DefenderInteractions.Builder,
+          Assembly-CSharp
+        m_MethodName: AssignNewBuildingForConstruction
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1214,7 +1227,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: 16fbeff6b74926e498e2cd59426c66cf,
             type: 2}
-          m_ObjectArgumentAssemblyTypeName: ScriptableObjects.Building.BuildingBase,
+          m_ObjectArgumentAssemblyTypeName: ScriptableObjects.Building.BuildingScriptableObject,
             Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -1486,7 +1499,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: a32cef39654fd254c8ea0ac6a861aacd,
             type: 2}
-          m_ObjectArgumentAssemblyTypeName: ScriptableObjects.Building.BuildingBase,
+          m_ObjectArgumentAssemblyTypeName: ScriptableObjects.Building.BuildingScriptableObject,
             Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -1715,7 +1728,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 11400000, guid: f0c38833a283ac3449f47e0af0a76f43,
             type: 2}
-          m_ObjectArgumentAssemblyTypeName: ScriptableObjects.Building.BuildingBase,
+          m_ObjectArgumentAssemblyTypeName: ScriptableObjects.Building.BuildingScriptableObject,
             Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -2410,6 +2423,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1892354988}
   - component: {fileID: 1892354987}
+  - component: {fileID: 1892354989}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -2449,6 +2463,19 @@ Transform:
   - {fileID: 963194228}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1892354989
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1892354986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 134511080b0f6f6448a9f26ab7889126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tileHeight: 1.3
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
