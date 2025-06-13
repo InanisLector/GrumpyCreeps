@@ -1,18 +1,22 @@
-﻿using UnityEngine;
+﻿using ScriptableObjects.GameState;
+using UnityEngine;
 
-namespace GameFlow.GameManager
+namespace GameFlow
 {
     public class GameManager
     {
-        #region Data
+        private PlayerManager _defender;
+        public PlayerManager Defender
+            => _defender;
 
-        public int DefenderMoney
-            => _defenderMoney;
-        private int _defenderMoney = 0;
-        public int AttackerMoney
-            => _attackerMoney;
-        private int _attackerMoney = 0;
+        private PlayerManager _attacker;
+        public PlayerManager Attacker
+            => _attacker;
 
-        #endregion
+        public GameManager(GameState gameState)
+        {
+            _defender = new(gameState.DefenderMoney);
+            _attacker = new(gameState.AttackerMoney);
+        } 
     }
 }

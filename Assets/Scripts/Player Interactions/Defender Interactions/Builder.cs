@@ -2,7 +2,7 @@
 using HexGridSystem;
 using Zenject;
 using ScriptableObjects.Building;
-using GameFlow.GameManager;
+using GameFlow;
 using Unity.VisualScripting;
 using UnityEngine.InputSystem;
 
@@ -53,7 +53,7 @@ namespace PlayerInteractions.DefenderInteractions
 
         private bool TryBuy(BuildingScriptableObject building)
         {
-            if (building.Cost < _gameManager.DefenderMoney)
+            if (_gameManager.Defender.PlayerMoney < building.Cost)
             {
                 // Add feedback
                 return false;

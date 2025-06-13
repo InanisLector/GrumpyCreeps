@@ -1,5 +1,6 @@
-﻿using GameFlow.GameManager;
+﻿using GameFlow;
 using HexGridSystem;
+using ScriptableObjects.GameState;
 using UnityEngine;
 using Zenject;
 
@@ -8,6 +9,7 @@ namespace Gameflow
     public class GameSceneInstaller : MonoInstaller
     {
         [SerializeField] private GameObject gridGameObject;
+        [SerializeField] private GameState initialGameState;
 
         public override void InstallBindings()
         {
@@ -21,7 +23,7 @@ namespace Gameflow
             Container.BindInterfacesAndSelfTo<IHexGrid>().FromInstance(hexManager);
 
 
-            var GameManager = new GameManager();
+            var GameManager = new GameManager(initialGameState);
             Container.BindInterfacesAndSelfTo<GameManager>().FromInstance(GameManager);
         }
     }
